@@ -1,0 +1,32 @@
+.starforce-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-family: monospace;
+}
+
+.starforce-row {
+    display: flex;
+    justify-content: center; /* center row by default */
+    gap: 8px;
+}
+
+.star-group {
+    display: inline-flex;
+}
+
+.star {
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.filled {
+    color: gold;
+}
+
+.unfilled {
+    color: #777777;
+    -webkit-text-stroke: #222222;
+    text-stroke: #222222;
+}
+  

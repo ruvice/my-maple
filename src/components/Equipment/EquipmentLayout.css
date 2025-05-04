@@ -1,0 +1,130 @@
+.equipment-layout-grid {
+    display: grid;
+    grid-template-areas: 
+    "ring1       .         hat             .                    emblem"
+    "ring2       pendant   faceaccessory   .                    badge"
+    "ring3       pendant2  eyeaccessory    earring              medal"
+    "ring4       weapon    top             shoulderdecoration   secondaryweapons"
+    "pocketitem  belt      bottom          glove                cape"
+    ".           .         shoes           .                    mechanicalheart";
+    grid-template-columns: repeat(5, 42px);
+    grid-template-rows: repeat(6, 42px);
+    gap: 2px 2px;
+}
+
+.ring1 {
+    grid-area: ring1;
+}
+
+.ring2 {
+    grid-area: ring2;
+}
+
+.ring3 {
+    grid-area: ring3;
+}
+
+.ring4 {
+    grid-area: ring4;
+}
+
+.pocketitem {
+    grid-area: pocketitem;
+}
+
+.pendant {
+    grid-area: pendant;
+}
+
+.pendant2 {
+    grid-area: pendant2;
+}
+
+.weapon {
+    grid-area: weapon;
+}
+
+.belt {
+    grid-area: belt;
+}
+
+.hat {
+    grid-area: hat;
+}
+
+.faceaccessory {
+    grid-area: faceaccessory;
+}
+
+.eyeaccessory {
+    grid-area: eyeaccessory;
+}
+
+.top {
+    grid-area: top;
+}
+
+.bottom {
+    grid-area: bottom;
+}
+
+.shoes {
+    grid-area: shoes;
+}
+
+.earring {
+    grid-area: earring;
+}
+
+.shoulderdecoration {
+    grid-area: shoulderdecoration;
+}
+
+.glove {
+    grid-area: glove;
+}
+
+.emblem {
+    grid-area: emblem;
+}
+
+.badge {
+    grid-area: badge;
+}
+
+.medal {
+    grid-area: medal;
+}
+
+.secondaryweapons {
+    grid-area: secondaryweapons;
+}
+
+.cape {
+    grid-area: cape;
+}
+
+.mechanicalheart {
+    grid-area: mechanicalheart;
+}
+
+.equipment-cell {
+    display: flex;
+    border-width: 1px;
+    border-style: solid;
+    background-color: #777777;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+}
+
+.undefined-border {
+    border-color: #777777;
+}
+
+.equipment-cell-image {
+    height: 34px;
+    width: 34px;
+    object-fit: contain; /* or 'cover' depending on the effect you want */
+    display: block;
+}

@@ -1,0 +1,42 @@
+.character-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #222222;
+    border-radius: 8px;
+    row-gap: 8px;
+    padding: 8px;
+    height: 100%;
+}
+
+.character-card-image {
+    height: 84px;
+    width: 84px;
+    object-fit: contain; /* or 'cover' depending on the effect you want */
+    display: block;
+    grid-template-areas: character-image;
+}
+
+.character-card-line-text {
+    margin: 0;
+}
+
+.character-info-grid {
+    display: grid;
+    grid-template-areas: 
+    "character-image character-basic-info";
+    grid-template-columns: 100px auto;
+}
+
+.character-basic-info {
+    display: flex;
+    flex-direction: column;
+    grid-template-areas: character-basic-info;
+    justify-content: center;
+    text-align: left;
+}
+
+.character-name {
+    font-size: 14px;
+    font-weight: 800;
+}

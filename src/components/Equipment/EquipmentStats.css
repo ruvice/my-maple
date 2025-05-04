@@ -1,0 +1,76 @@
+.item-name {
+    font-size: 12px;
+    font-weight: bolder;
+}
+
+.header {
+    text-align: center;
+    border-bottom: 2px dashed #777777;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 4px;
+}
+
+.item-details {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-bottom: 2px dashed #777777;
+    gap: 16px;
+}
+
+.equipment-stats {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-bottom: 2px dashed #777777;
+}
+
+.equipment-potential {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-bottom: 2px dashed #777777;
+}
+
+.equipment-segment:last-of-type {
+    border-bottom: none;
+    padding-bottom: none;
+}
+
+.item-image {
+    border: 2px solid #00CC99;
+    padding: 8px;
+    border-radius: 4px;
+    height: 34px;
+    width: 34px;
+    object-fit: contain; /* or 'cover' depending on the effect you want */
+    display: block;
+    background-color: #777777;
+}
+
+.equipment-stat-line-text {
+    margin: 0;
+}
+
+.add {
+    color: #CCFD00;
+}
+
+.etc {
+    color: #AFADFD;
+}
+
+.starforce {
+    color: #FDCA00;
+}
+
+.enhanced {
+    color: #66FFFF;
+}

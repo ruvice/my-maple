@@ -1,0 +1,61 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.rare-background {
+    background-color: #0099FF;
+}
+
+.epic-background {
+    background-color: #7700EE;
+}
+
+.unique-background {
+    background-color: #FFBB00;
+}
+
+.legendary-background {
+    background-color: #77EE00;
+}
+
+.rare {
+    color: #66FFFF;
+}
+
+.epic {
+    color: #9966FF;
+}
+
+.unique {
+    color: #FFCC00;
+}
+
+.legendary {
+    color: #CCFF00;
+}
+
+.rare-border {
+    border-color: #66FFFF;
+}
+
+.epic-border {
+    border-color: #9966FF;
+}
+
+.unique-border {
+    border-color: #FFCC00;
+}
+
+.legendary-border {
+    border-color: #CCFF00;
+}
+
+.green-selection-color {
+    color: #AABB22;
+}
+
+.green-selection-background {
+    background-color: #AABB22;
+}
