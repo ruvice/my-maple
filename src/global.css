@@ -59,3 +59,22 @@
 .green-selection-background {
     background-color: #AABB22;
 }
+
+.light-blue-background {
+    background-color: #2299AA;
+}
+
+.light-blue {
+    color: #2299AA;
+}
+
+.light-gray-background {
+    background-color: #333333;
+}
+.dark-gray-background {
+    background-color: #222222;
+}
+
+.gold {
+    color: #FDCA00;
+}

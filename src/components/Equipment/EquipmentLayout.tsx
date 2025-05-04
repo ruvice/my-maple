@@ -10,7 +10,7 @@ type EquipmentLayoutProps = {
 
 function EquipmentLayout(props: EquipmentLayoutProps) {
     const { equipments } = props;
-    const  { showModal, ModalRenderer } = useModal();
+    const  { showModal, hideModal, ModalRenderer } = useModal();
     const equipmentCells = useMemo(() => {
         if (equipments) {
             return equipments.map((equipment) => {
@@ -18,7 +18,7 @@ function EquipmentLayout(props: EquipmentLayoutProps) {
                 const slotKey = slot.toLowerCase().replace(/\s+/g, '');
                 const potentialGrade = equipment.potential_option_grade?.toLowerCase()
                 return (
-                    <div key={slotKey} className={`${slotKey} ${potentialGrade}-border equipment-cell`} onClick={() => showModal(<EquipmentCard equipment={equipment} />)}>
+                    <div key={slotKey} className={`${slotKey} ${potentialGrade}-border equipment-cell`} onClick={() => showModal(<EquipmentCard equipment={equipment} hide={hideModal}/>)}>
                         <img className={`equipment-cell-image`} src={equipment.item_icon} />
                     </div>
                 )

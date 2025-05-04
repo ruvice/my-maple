@@ -1,9 +1,4 @@
-.item-name {
-    font-size: 12px;
-    font-weight: bolder;
-}
-
-.header {
+.item-header {
     text-align: center;
     border-bottom: 2px dashed #777777;
     padding-left: 16px;
@@ -48,8 +43,8 @@
     border: 2px solid #00CC99;
     padding: 8px;
     border-radius: 4px;
-    height: 34px;
-    width: 34px;
+    height: 48px;
+    width: 48px;
     object-fit: contain; /* or 'cover' depending on the effect you want */
     display: block;
     background-color: #777777;

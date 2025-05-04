@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCharacterStore } from '../store/characterStore';
-import { fetchCharacterBasic, fetchCharacterItemEquip, fetchCharacterOCID, fetchCharacterSymbol } from '../api/api';
+import { fetchCharacterBasic, fetchCharacterEXP, fetchCharacterItemEquip, fetchCharacterOCID, fetchCharacterSymbol } from '../api/api';
 import { OpenAPIOcidQueryResponse, OpenAPICharacterBasicResponse, OpenAPIItemEquipmentResponse, OpenAPISymbolEquipmentResponse } from '../types/types';
 
-const CHARACTER_NAMES = ['lqsKniGhT'];
+const CHARACTER_NAMES = ['ruvicce'];
 
 export default function AppInitLoader() {
     const queryClient = useQueryClient()
@@ -12,6 +12,8 @@ export default function AppInitLoader() {
     const setCharacterOCID = useCharacterStore((s) => s.setCharacterOCID);
     const setCharacterBasic =  useCharacterStore((s) => s.setCharacterBasic);
     const setCharacterItemEquip = useCharacterStore((s) => s.setCharacterItemEquip);
+    const setCharacterSymbol = useCharacterStore((s) => s.setCharacterSymbol);
+    const setCharacterEXP = useCharacterStore((s) => s.setCharacterEXP);
 
     useEffect(() => {
         const loadCharacters = async () => {
@@ -22,26 +24,35 @@ export default function AppInitLoader() {
                         queryFn: () => fetchCharacterOCID(characterName),
                     });
                     setCharacterOCID(characterName, ocidRes.ocid);
-                    console.log(ocidRes)
 
                     const charBasicRes = await queryClient.fetchQuery<OpenAPICharacterBasicResponse>({
                         queryKey: ['basic', characterName],
                         queryFn: () => fetchCharacterBasic(ocidRes.ocid),
                     });
                     setCharacterBasic(characterName, charBasicRes)
+                    setCharacterEXP(characterName, charBasicRes)
 
                     const itemEquipRes = await queryClient.fetchQuery<OpenAPIItemEquipmentResponse>({
                         queryKey: ['equip', characterName],
                         queryFn: () => fetchCharacterItemEquip(ocidRes.ocid),
                     });
-                    console.log(itemEquipRes)
                     setCharacterItemEquip(characterName, itemEquipRes)
 
                     const symbolRes = await queryClient.fetchQuery<OpenAPISymbolEquipmentResponse>({
                         queryKey: ['symbol', characterName],
                         queryFn: () => fetchCharacterSymbol(ocidRes.ocid),
                     });
-                    console.log(symbolRes);
+                    setCharacterSymbol(characterName, symbolRes);
+                    setTimeout(async () => {
+                        for (let i = 1; i < 5; i ++) {
+                            const charBasicRes = await queryClient.fetchQuery<OpenAPICharacterBasicResponse>({
+                                queryKey: ['basic', characterName],
+                                queryFn: () => fetchCharacterEXP(ocidRes.ocid, i),
+                            });
+                            setCharacterEXP(characterName, charBasicRes)
+                        }
+                    }, 2000)
+                    
                     
                 } catch (err) {
                     console.warn(`⚠️ Failed to fetch "${characterName}":`, err);

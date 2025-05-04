@@ -24,3 +24,4 @@ yarn-error.log*
 .env
 notes.txt
 *.png
+*.json

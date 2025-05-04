@@ -40,6 +40,14 @@ export interface Character {
     isLoading?: boolean;
     error?: string;
     equips?: ItemEquipInfo;
+    symbol?: SymbolInfo;
+    expProgression?: ExpData[];
+}
+
+export interface ExpData {
+    date: string,
+    exp: number,
+    exp_rate: string
 }
 
 // Equipment model
@@ -65,4 +73,3 @@ export interface OpenAPISymbolEquipmentResponse {
     character_class: string,
     symbol: Symbol[]
 }
-

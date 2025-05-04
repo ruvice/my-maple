@@ -1,0 +1,53 @@
+
+.header {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Two equal columns */
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    gap: 1px;
+}
+    
+.tab {
+    height: 38px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+    
+/* The animated border */
+.tab::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;  /* Keep width full, animate with scaleX instead */
+    height: 3px;
+    background-color: white;
+    transform: scaleX(0);  /* Start hidden */
+    transition: transform 0.4s ease-in-out;
+}
+
+/* Hover effect - Expand */
+.tab.active::after {
+    transform: scaleX(1);
+}
+
+.tab ::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;  /* Keep width full, animate with scaleX instead */
+    height: 3px;
+    background-color: #222222;
+}
+
+.tab-label {
+    font-size: 12px;
+}

@@ -1,0 +1,37 @@
+.symbol-card {
+    background-color: rgba(22, 22, 22, 0.9);
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    border: 2px solid white;
+    border-radius: 8px;
+    width: 280px;
+    max-height: 480px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    cursor: pointer;
+}
+
+
+p {
+    font-size: 10px;
+}
+
+.symbol-stat-line-text{
+    margin: 0px;
+}
+
+.symbol-segment {
+    align-items: center;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-bottom: 2px dashed #777777;
+    gap: 16px;
+}
+
+.symbol-segment:last-of-type {
+    border-bottom: none;
+    padding-bottom: none;
+}

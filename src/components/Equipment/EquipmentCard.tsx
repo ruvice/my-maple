@@ -4,24 +4,32 @@ import EquipmentStats from './EquipmentStats'
 import EquipmentPotential from './EquipmentPotential'
 import EquipmentCardHeader from './EquipmentCardHeader'
 import "./EquipmentCard.css"
+import CardHeader from '../Card/CardHeader'
 
 type EquipmentCardProps = {
-    equipment: Equipment
+    equipment: Equipment,
+    hide: () => void
 }
 
 function EquipmentCard(props: EquipmentCardProps) {
-    const { equipment } = props
+    const { equipment, hide } = props
     if (equipment === undefined) {
         return <p className="equipment-stat-line-text">Failed to retreive equipment information</p>
     }
     return (
-        <div className="equipment-card">
-            <div className='equipment-segment header'>
-                <EquipmentCardHeader 
+        <div className="equipment-card" onClick={hide}>
+            <div className='equipment-segment item-header'>
+                <CardHeader 
                     starforce={equipment.starforce} 
                     name={equipment.item_name} 
                     scrollUpgrade={equipment.scroll_upgrade} 
-                    potentialGrade={equipment.potential_option_grade} />
+                    potentialGrade={equipment.potential_option_grade}
+                    equipItem={true} />
+                {/* <EquipmentCardHeader 
+                    starforce={equipment.starforce} 
+                    name={equipment.item_name} 
+                    scrollUpgrade={equipment.scroll_upgrade} 
+                    potentialGrade={equipment.potential_option_grade} /> */}
             </div>
             <div className='equipment-segment item-details'>
                 <img className="item-image" src={equipment.item_icon} />

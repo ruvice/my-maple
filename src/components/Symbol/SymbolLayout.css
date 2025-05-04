@@ -1,0 +1,23 @@
+.symbol-layout-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 40px);
+    grid-template-rows: repeat(3, 60px);
+    justify-content: center;
+}
+
+.symbol-cell-text {
+    margin: 0px;
+}
+
+.symbol-cell {
+    display: flex;
+    flex-direction: column;
+    border-width: 1px;
+    border-style: solid;
+    background-color: #777777;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    border-color: #222222;
+    cursor: pointer;
+}
