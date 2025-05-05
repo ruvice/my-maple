@@ -4,7 +4,7 @@ import { useCharacterStore } from '../store/characterStore';
 import { fetchCharacterBasic, fetchCharacterEXP, fetchCharacterItemEquip, fetchCharacterOCID, fetchCharacterSymbol } from '../api/api';
 import { OpenAPIOcidQueryResponse, OpenAPICharacterBasicResponse, OpenAPIItemEquipmentResponse, OpenAPISymbolEquipmentResponse } from '../types/types';
 
-const CHARACTER_NAMES = ['ruvicce'];
+const CHARACTER_NAMES = ['ruvicce', 'lqsKniGhT'];
 
 export default function AppInitLoader() {
     const queryClient = useQueryClient()

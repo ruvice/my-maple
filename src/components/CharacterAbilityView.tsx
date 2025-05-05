@@ -2,7 +2,7 @@ import React from 'react'
 
 function CharacterAbilityView() {
   return (
-    <div>CharacterAbilityView</div>
+    <p>Coming soon</p>
   )
 }
 

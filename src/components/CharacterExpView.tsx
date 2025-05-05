@@ -11,7 +11,6 @@ type CharacterExpViewProps = {
 const CustomTooltip = (props: any) => {
     const {active, payload, label} = props;
     if (active && payload && payload.length) {
-        console.log(payload)
       return (
         <div className="custom-tooltip">
           <p className="custom-tooltip-label" style={{fontSize: 12}}>{label}</p>
@@ -56,7 +55,6 @@ function CharacterExpView(props: CharacterExpViewProps) {
                 width={30}
                 style={{ fontSize: 12 }}
                 domain={([min, max]) => {
-                    console.log(min, max)
                     const start = Math.floor(min / 10) * 10; // round down to nearest 10
                     const end = Math.ceil(max / 10) * 10;            // round up to nearest 10
                     return [start, end];
