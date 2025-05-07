@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCharacterStore } from '../store/characterStore';
-import { fetchCharacterBasic, fetchCharacterEXP, fetchCharacterItemEquip, fetchCharacterOCID, fetchCharacterSymbol } from '../api/api';
-import { OpenAPIOcidQueryResponse, OpenAPICharacterBasicResponse, OpenAPIItemEquipmentResponse, OpenAPISymbolEquipmentResponse } from '../types/types';
+import { fetchCharacterStat, fetchCharacterBasic, fetchCharacterEXP, fetchCharacterItemEquip, fetchCharacterOCID, fetchCharacterSymbol } from '../api/api';
+import { OpenAPIOcidQueryResponse, OpenAPICharacterBasicResponse, OpenAPIItemEquipmentResponse, OpenAPISymbolEquipmentResponse, OpenAPIStatResponse } from '../types/types';
 
 const CHARACTER_NAMES = ['ruvicce', 'lqsKniGhT'];
 
@@ -13,6 +13,7 @@ export default function AppInitLoader() {
     const setCharacterBasic =  useCharacterStore((s) => s.setCharacterBasic);
     const setCharacterItemEquip = useCharacterStore((s) => s.setCharacterItemEquip);
     const setCharacterSymbol = useCharacterStore((s) => s.setCharacterSymbol);
+    const setCharacterStat = useCharacterStore((s) => s.setCharacterStat);
     const setCharacterEXP = useCharacterStore((s) => s.setCharacterEXP);
 
     useEffect(() => {
@@ -43,17 +44,23 @@ export default function AppInitLoader() {
                         queryFn: () => fetchCharacterSymbol(ocidRes.ocid),
                     });
                     setCharacterSymbol(characterName, symbolRes);
+
+                    const statRes = await queryClient.fetchQuery<OpenAPIStatResponse>({
+                        queryKey: ['stat', characterName],
+                        queryFn: () => fetchCharacterStat(ocidRes.ocid),
+                    });
+                    setCharacterStat(characterName, statRes);
+
+                    // Fetch this last
                     setTimeout(async () => {
                         for (let i = 1; i < 5; i ++) {
                             const charBasicRes = await queryClient.fetchQuery<OpenAPICharacterBasicResponse>({
-                                queryKey: ['basic', characterName],
+                                queryKey: [`basic${i}`, characterName],
                                 queryFn: () => fetchCharacterEXP(ocidRes.ocid, i),
                             });
                             setCharacterEXP(characterName, charBasicRes)
                         }
                     }, 2000)
-                    
-                    
                 } catch (err) {
                     console.warn(`⚠️ Failed to fetch "${characterName}":`, err);
                 }

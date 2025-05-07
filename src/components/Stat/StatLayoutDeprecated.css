@@ -1,0 +1,204 @@
+.stat-layout-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px 4px;
+    width: 100%;
+}
+
+.first {
+    grid-template-areas: 
+    "hp       mp"
+    "str      dex "
+    "int      luk";
+}
+
+.second {
+    grid-template-areas: 
+    "statatt                            damage"
+    "finaldamage                        bossmonsterdamage "
+    "ignoredef                          normalmonsterdamage"
+    "att                                criticalrate"
+    "matt                               criticaldamage"
+    "cooldownreduction                  buffduration"
+    "unaffectedbycooldown               ignoreelementalresistance"
+    "abnormalstatusadditionaldamage     summondurationincrease";
+}
+
+.third {
+    grid-template-areas: 
+    "mesoobtained                       starforce"
+    "itemdroprate                       arcaneforce"
+    "additonalexpobtained              authenticforce";
+}
+
+.fourth {
+    grid-template-areas: 
+    "def                 statusresistance"
+    "speed               jump"
+    "stance              attackspeed";
+}
+
+/* Grid template area assignments - first*/
+.hp {
+    grid-area: hp;
+}
+
+.mp {
+    grid-area: mp;
+}
+
+.str {
+    grid-area: str;
+}
+
+.dex {
+    grid-area: dex;
+}
+
+.int {
+    grid-area: int;
+}
+
+.luk {
+    grid-area: luk;
+}
+
+/* Grid template area assignments - second */
+
+.statatt {
+    grid-area: statatt;
+}
+
+.damage {
+    grid-area: damage;
+}
+
+.finaldamage {
+    grid-area: finaldamage;
+}
+
+.bossmonsterdamage {
+    grid-area: bossmonsterdamage;
+}
+
+.ignoredef {
+    grid-area: ignoredef;
+}
+
+.normalmonsterdamage {
+    grid-area: normalmonsterdamage;
+}
+
+
+.att {
+    grid-area: att;
+}
+
+.criticalrate {
+    grid-area: criticalrate;
+}
+
+.matt {
+    grid-area: matt;
+}
+
+.criticaldamage {
+    grid-area: criticaldamage;
+}
+
+.cooldownreduction {
+    grid-area: cooldownreduction;
+}
+
+.buffduration {
+    grid-area: buffduration;
+}
+
+.unaffectedbycooldown {
+    grid-area: unaffectedbycooldown;
+}
+
+.ignoreelementalresistance {
+    grid-area: ignoreelementalresistance;
+}
+
+.abnormalstatusadditionaldamage {
+    grid-area: abnormalstatusadditionaldamage;
+}
+
+.summondurationincrease {
+    grid-area: summondurationincrease;
+}
+
+/* Grid template area assignments - third */
+
+.mesoobtained {
+    grid-area: mesoobtained;
+}
+
+.starforce {
+    grid-area: starforce;
+}
+
+.itemdroprate {
+    grid-area: itemdroprate;
+}
+
+.arcaneforce {
+    grid-area: arcaneforce;
+}
+
+.additonalexpobtained {
+    grid-area: additonalexpobtained;
+}
+
+.authenticforce {
+    grid-area: authenticforce;
+}
+
+/* Grid template area assignments - fourth */
+.def {
+    grid-area: def;
+}
+
+.statusresistance {
+    grid-area: statusresistance;
+}
+
+.speed {
+    grid-area: speed;
+}
+
+.jump {
+    grid-area: jump;
+}
+
+.stance {
+    grid-area: stance;
+}
+
+.attackspeed {
+    grid-area: attackspeed;
+}
+
+.equipment-cell {
+    display: flex;
+    border-width: 1px;
+    border-style: solid;
+    background-color: #777777;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.undefined-border {
+    border-color: #777777;
+}
+
+.equipment-cell-image {
+    height: 34px;
+    width: 34px;
+    object-fit: contain; /* or 'cover' depending on the effect you want */
+    display: block;
+}

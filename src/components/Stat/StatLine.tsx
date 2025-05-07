@@ -1,0 +1,49 @@
+import React, { useEffect } from 'react'
+import { Stat } from '../../types/types';
+import './StatLine.css'
+
+type StatLineProps = {
+    slotKey: string;
+    stat: Stat
+}
+
+const PERCENTAGE_STATS_SET = new Set([
+    "damage", "finaldamage", "bossmonsterdamage", "ignoredef", "normalmonsterdamage", "criticalrate",
+    "criticaldamage", "buffduration", "unaffectedbycooldown", "ignoreelementalresistance",
+    "abnormalstatusadditionaldamage", "summondurationincrease", "mesoobtained", "itemdroprate",
+    "additonalexpobtained", "speed", "jump", "stance"
+])
+
+function parseStrictInt(str: string): number | null {
+    if (/^-?\d+$/.test(str.trim())) {
+      return Number(str);
+    }
+    return null;
+}
+
+function StatLine(props: StatLineProps) {
+    const { slotKey, stat } = props;
+    let label = stat.stat_name;
+    // Handling stupid edge cases
+    switch (stat.stat_name) {
+        case "Abnormal Status Additional Damage":
+            label = "Abnormal Status Add. Damage"
+            break;
+        case "Additonal EXP Obtained":
+            label = "Additional EXP Obtained"
+            break;
+        default:
+            break;
+    }
+    
+    const value = parseStrictInt(stat.stat_value)?.toLocaleString() ?? stat.stat_value
+
+    return (
+        <div key={slotKey} className={`${slotKey} stat-cell`}>
+            <p className={`stat-line name ${slotKey === 'combatpower' && 'gold'}`}>{label}</p>
+            <p className={`stat-line ${slotKey === 'combatpower' && 'gold'}`}>{value}{PERCENTAGE_STATS_SET.has(slotKey) && '%'}</p>
+        </div>
+    )
+}
+
+export default StatLine

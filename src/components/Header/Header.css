@@ -10,7 +10,7 @@
 }
     
 .tab {
-    height: 38px;
+    height: 28px;
     position: relative;
     display: flex;
     flex-direction: row;
@@ -50,4 +50,5 @@
 
 .tab-label {
     font-size: 12px;
+    user-select: none;
 }

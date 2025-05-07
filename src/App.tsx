@@ -15,6 +15,7 @@ function App() {
             <div className="App">
                 <AppInitLoader />
                 <Character />
+                <p className="nexon-credit">Data based on NEXON Open API</p>
             </div>
         </QueryClientProvider>
     );

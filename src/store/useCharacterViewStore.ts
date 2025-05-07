@@ -8,6 +8,6 @@ type ViewStore = {
 };
 
 export const useViewStore = create<ViewStore>((set) => ({
-  currentView: ViewMode.Equipment,
+  currentView: ViewMode.Ability,
   setView: (view) => set({ currentView: view })
 }));

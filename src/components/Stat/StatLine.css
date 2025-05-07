@@ -1,0 +1,31 @@
+.stat-cell {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    white-space: nowrap;
+    background-color: #222222;
+    border-radius: 4px;
+    padding: 12px 8px 12px 8px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #444444;
+}
+
+.stat-line {
+    margin: 0px;
+    font-size: 12px;
+}
+
+.equipment-cell {
+    display: flex;
+    border-width: 1px;
+    border-style: solid;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.stat-line.name {
+    font-weight: 700;
+}

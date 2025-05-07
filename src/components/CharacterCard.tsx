@@ -48,7 +48,7 @@ function CharacterCard(props: CharacterCardProps) {
             </div>
             <Header options={ViewMode} onSelected={handleHeaderSelection} currentRef={currentViewRef} />
             <div className="character-detailed-info">
-                {currentView === ViewMode.Ability && <CharacterAbilityView />}
+                {currentView === ViewMode.Ability && <CharacterAbilityView stat={character.stat}/>}
                 {currentView === ViewMode.Equipment && 
                 <CharacterEquipmentView 
                     active={character.equips?.item_equipment} 

@@ -1,0 +1,28 @@
+.stat-container {
+    display: flex;
+    flex-direction: column;
+    padding-left: 16px;
+    padding-right: 16px;
+    max-height: 100%;
+    overflow: auto;        /* enables scrolling */
+    gap: 8px;
+}
+
+.stat-container::-webkit-scrollbar {
+    background-color: #333333;
+    width: 8px;
+}
+
+.stat-container::-webkit-scrollbar-thumb {
+    background-color: #2299AA; /* replace with the actual value for bg-dota-tab-background */
+    border-radius: 0.5rem;     /* rounded-lg = 0.5rem */
+    min-height: 3rem;          /* min-h-12 = 3rem */
+    width: 0.5rem;             /* w-2 = 0.5rem */
+}
+
+.stat-wrapper {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 6px;
+    height: 100%;
+}

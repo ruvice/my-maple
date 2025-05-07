@@ -1,6 +1,6 @@
     // store/characterStore.ts
     import { create } from 'zustand';
-    import { BasicCharacterInfo, Character, ExpData, ItemEquipInfo, Ocid, SymbolInfo } from '../types/types';
+    import { StatInfo, BasicCharacterInfo, Character, ExpData, ItemEquipInfo, Ocid, SymbolInfo } from '../types/types';
 
     interface CharacterStore {
         characters: Record<string, Character>;
@@ -8,6 +8,7 @@
         setCharacterBasic: (name: string, basic: BasicCharacterInfo) => void;
         setCharacterItemEquip: (name: string, itemEquip: ItemEquipInfo) => void;
         setCharacterSymbol: (name: string, symbol: SymbolInfo) => void;
+        setCharacterStat: (name: string, symbol: StatInfo) => void;
         setCharacterEXP: (name: string, basic: BasicCharacterInfo) => void;
         getCharacter: (name: string) => Character;
         reset: () => void;
@@ -87,4 +88,16 @@
                 };
             });
         },
+
+        
+        setCharacterStat: (name: string, stat: StatInfo) =>
+            set((state) => ({
+                characters: {
+                    ...state.characters,
+                    [name]: {
+                        ...state.characters[name],
+                        stat: stat,
+                    },
+                },
+        })),
     }));
