@@ -33,6 +33,7 @@ export interface OpenAPICharacterBasicResponse {
 // Character model
 // Alias for readability
 export type BasicCharacterInfo = OpenAPICharacterBasicResponse
+export type ProxyCharacterResponse = Character
 export interface Character {
     name: string;
     ocid: Ocid;
@@ -42,7 +43,7 @@ export interface Character {
     equips?: ItemEquipInfo;
     symbol?: SymbolInfo;
     expProgression?: ExpData[];
-    stat: StatInfo;
+    stat?: StatInfo;
 }
 
 export interface ExpData {

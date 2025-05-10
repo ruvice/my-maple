@@ -13,6 +13,7 @@
         getCharacter: (name: string) => Character;
         setCharacters: (characters:  Characters) => void;
         getCharacters: () => Characters;
+        setCharacter: (name: string, character: Character) => void;
         reset: () => void;
     }
 
@@ -109,5 +110,14 @@
             set(() => ({ characters: charaters }));
         },
 
-        getCharacters: () => get().characters
+        getCharacters: () => get().characters,
+
+        setCharacter: (name: string, character: Character) => {
+            set((state) => ({
+                characters: {
+                    ...state.characters,
+                    [name]: character,
+                },
+            })) 
+        }
     }));

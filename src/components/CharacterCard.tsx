@@ -60,11 +60,6 @@ function CharacterCard(props: CharacterCardProps) {
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat'
                 }} >
-            <div className='character-card-logo-container'>
-                <img className="character-card-logo-image character-card-logo" src={mapleScouterLogo} alt="MapleScouter" onClick={() => window.open(mapleScouterURL, '_blank')}/>
-                <img className="character-card-logo-image character-card-logo" src={mapleStalkerSeaLogo} alt="MapleStalkerSEA" onClick={() => window.open(mapleStalkerSeaURL, '_blank')}/>
-                <MapleGGLogo className="character-card-logo" onClick={() => window.open(mapleGGURL, '_blank')} />
-            </div>
             <div className="character-info-grid">
                 
                 <div className="character-card-controls"><ArrowLeft color={'white'} size={12} onClick={onPrev}/></div>
@@ -73,14 +68,18 @@ function CharacterCard(props: CharacterCardProps) {
                         <img className="character-card-image" src={character.basic?.character_image}></img>
                     </div>
                     <div className="character-basic-info">
-                        <p className="character-card-line-text character-name bold-text">{character.basic?.character_name}</p>
+                        <p className="`character-card`-line-text character-name bold-text">{character.basic?.character_name}</p>
                         <p className="character-card-line-text">{character.basic?.character_class}</p>
                         <p className="character-card-line-text">Level {character.basic?.character_level}</p>
                         <p className="character-card-line-text">{character.basic?.world_name}</p>
                     </div>
                 </div>
-                
                 <div className="character-card-controls"><ArrowRight color={'white'} size={12} onClick={onNext}/></div>
+                <div className='character-card-logo-container'>
+                    <img className="character-card-logo-image character-card-logo" src={mapleScouterLogo} alt="MapleScouter" onClick={() => window.open(mapleScouterURL, '_blank')}/>
+                    <img className="character-card-logo-image character-card-logo" src={mapleStalkerSeaLogo} alt="MapleStalkerSEA" onClick={() => window.open(mapleStalkerSeaURL, '_blank')}/>
+                    <MapleGGLogo className="character-card-logo" onClick={() => window.open(mapleGGURL, '_blank')} />
+                </div>
             </div>
             <Header options={ViewMode} onSelected={handleHeaderSelection} currentRef={currentViewRef} />
             <div className="character-detailed-info">

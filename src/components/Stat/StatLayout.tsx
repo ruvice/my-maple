@@ -48,12 +48,12 @@ function StatLayout(props: StatLayoutProps) {
 
             // Handling ATT Stat
             const statAtt = `${parseInt(minAtt).toLocaleString()} - ${parseInt(maxAtt).toLocaleString()}`
-            divMapping['statatt'] = (<StatLine slotKey={'statatt'} stat={{stat_name:"Stat Att", stat_value: statAtt}} />)
+            divMapping['statatt'] = (<StatLine key={'statatt'} slotKey={'statatt'} stat={{stat_name:"Stat Att", stat_value: statAtt}} />)
 
             
             // Handling Cooldown Reduction
             const cooldownReduction = `${cdrSec}s / ${cdr}%`
-            divMapping['cooldownreduction'] = (<StatLine slotKey={'cooldownreduction'} stat={{stat_name:"Cooldown Reduction", stat_value: cooldownReduction}} />)
+            divMapping['cooldownreduction'] = (<StatLine key={'cooldownreduction'} slotKey={'cooldownreduction'} stat={{stat_name:"Cooldown Reduction", stat_value: cooldownReduction}} />)
 
             return ORDER.map((slotKey) => divMapping[slotKey])
         }

@@ -45,6 +45,7 @@
     margin-bottom: 8px;
     padding: 8px;
     gap: 8px;
+    position: relative;
 }
 
 .character-basic-info {
@@ -56,6 +57,7 @@
 
 .character-name {
     font-size: 14px;
+    margin: 0px;
 }
 
 .character-detailed-info {
@@ -79,20 +81,16 @@
     justify-content: center;
 }
 
-.character-card-logo-text {
-    font-size: 10px;
-    margin: 0px;
-}
-
 .character-card-logo-container {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 4px;
-    position: absolute;
-    right: 40px;
-    top: 88px;
+    position:absolute;
     z-index: 9;
+    width: 60px;
+    bottom:8px;
+    right: 8px
 }
 
 .character-card-logo-image {

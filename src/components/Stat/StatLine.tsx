@@ -39,9 +39,9 @@ function StatLine(props: StatLineProps) {
     const value = parseStrictInt(stat.stat_value)?.toLocaleString() ?? stat.stat_value
 
     return (
-        <div key={slotKey} className={`${slotKey} stat-cell`}>
+        <div className={`${slotKey} stat-cell`}>
             <p className={`stat-line name ${slotKey === 'combatpower' && 'gold'} bold-text`}>{label}</p>
-            <p className={`stat-line value ${slotKey === 'combatpower' && 'gold'}`}>{value}{PERCENTAGE_STATS_SET.has(slotKey) && '%'}</p>
+            <p className={`stat-line value ${slotKey === 'combatpower' && 'gold'} light-text`}>{value}{PERCENTAGE_STATS_SET.has(slotKey) && '%'}</p>
         </div>
     )
 }
