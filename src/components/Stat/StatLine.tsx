@@ -40,8 +40,8 @@ function StatLine(props: StatLineProps) {
 
     return (
         <div key={slotKey} className={`${slotKey} stat-cell`}>
-            <p className={`stat-line name ${slotKey === 'combatpower' && 'gold'}`}>{label}</p>
-            <p className={`stat-line ${slotKey === 'combatpower' && 'gold'}`}>{value}{PERCENTAGE_STATS_SET.has(slotKey) && '%'}</p>
+            <p className={`stat-line name ${slotKey === 'combatpower' && 'gold'} bold-text`}>{label}</p>
+            <p className={`stat-line value ${slotKey === 'combatpower' && 'gold'}`}>{value}{PERCENTAGE_STATS_SET.has(slotKey) && '%'}</p>
         </div>
     )
 }

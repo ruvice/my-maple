@@ -1,6 +1,7 @@
 import React from 'react'
 import { StatInfo } from '../types/types'
 import StatLayout from './Stat/StatLayout';
+import LoadingView from './common/Loading/LoadingView';
 
 type CharacterAbilityViewProps = {
     stat: StatInfo;
@@ -8,7 +9,7 @@ type CharacterAbilityViewProps = {
 
 function CharacterAbilityView(props: CharacterAbilityViewProps) {
     const { stat } = props;
-    if (stat === undefined) { return <div>Failed to get stats</div> }
+    if (stat === undefined) { return <LoadingView /> }
     return (
         <>
             <StatLayout stats={stat.final_stat}/>

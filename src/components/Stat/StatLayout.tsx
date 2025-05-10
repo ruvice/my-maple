@@ -3,6 +3,7 @@ import "./StatLayout.css"
 import { useModal } from '../../utils/useModal'
 import { Stat } from '../../types/types'
 import StatLine from './StatLine'
+import LoadingView from '../common/Loading/LoadingView'
 
 type StatLayoutProps = {
     stats: Stat[] | undefined
@@ -18,7 +19,6 @@ const ORDER = [
 
 function StatLayout(props: StatLayoutProps) {
     const { stats } = props;
-    console.log(stats)
     const statCells = useMemo(() => {
         if (stats) {
             const divMapping: Record<string, JSX.Element> = {}
@@ -26,7 +26,7 @@ function StatLayout(props: StatLayoutProps) {
             stats.forEach((stat) => {
                 const slot = stat.stat_name
                 const slotKey = slot.toLowerCase().replace(/\s+/g, '');
-                const statLine = <StatLine slotKey={slotKey} stat={stat} />
+                const statLine = <StatLine key={slotKey} slotKey={slotKey} stat={stat} />
                 divMapping[slotKey] = statLine
                 switch (slotKey) {
                     case "minimumattstat":
@@ -58,7 +58,7 @@ function StatLayout(props: StatLayoutProps) {
             return ORDER.map((slotKey) => divMapping[slotKey])
         }
     }, [stats])
-    if (stats === undefined || statCells  === undefined) { return <div>Failed to get stats</div>}
+    if (stats === undefined || statCells  === undefined) { return <LoadingView />}
     return (
         <div className="stat-wrapper">
             <div className="stat-container">

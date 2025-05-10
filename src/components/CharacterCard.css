@@ -2,16 +2,23 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #222222;
     border-radius: 8px;
-    padding: 8px;
+    margin: 8px;
     flex-grow: 1;
 }
 
+.character-card-job-image {
+    border-radius: 8px;
+    background-color: rgba(22,22,22,0.5);
+    width: 100%;
+    height: 100%;
+    padding: 8px 8px 8px 8px;
+}
+
 .character-card-image {
-    height: 84px;
-    width: 84px;
-    object-fit: contain; /* or 'cover' depending on the effect you want */
+    height: 64px;
+    width: 64px;
+    object-fit: scale-down; /* or 'cover' depending on the effect you want */
     display: block;
     grid-template-areas: character-image;
 }
@@ -20,31 +27,42 @@
     margin: 0;
 }
 
+.character-card-basic-info-container {
+    display: flex;
+    flex-direction: row;
+    grid-template-areas: character-basic-info-container;
+    gap: 8px;
+}
+
 .character-info-grid {
     display: grid;
     grid-template-areas: 
     "character-image character-basic-info";
-    grid-template-columns: 20px 100px auto 20px;
+    grid-template-columns: 20px auto 20px;
     width: 100%;
+    background-color: rgba(33,33,33,0.9);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    padding: 8px;
+    gap: 8px;
 }
 
 .character-basic-info {
     display: flex;
     flex-direction: column;
-    grid-template-areas: character-basic-info;
     justify-content: center;
     text-align: left;
 }
 
 .character-name {
     font-size: 14px;
-    font-weight: 800;
 }
 
 .character-detailed-info {
     width: 100%;
-    height: 310px;
-    background-color: #333333;
+    height: 300px;
+    background-color: rgba(33,33,33,0.9);
+    border-radius: 8px;
 }
 
 .character-card-controls {
@@ -55,13 +73,33 @@
     user-select: none;
 }
 
-.character-card-controls-text {
-    font-size: 20px;
-    font-weight: 600;
-}
-
 .character-card-image-div {
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+
+.character-card-logo-text {
+    font-size: 10px;
+    margin: 0px;
+}
+
+.character-card-logo-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    position: absolute;
+    right: 40px;
+    top: 88px;
+    z-index: 9;
+}
+
+.character-card-logo-image {
+    height: 14px;
+    width: 14px;
+}
+
+.character-card-logo {
+    cursor: pointer;
 }

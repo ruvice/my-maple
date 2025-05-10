@@ -25,11 +25,6 @@ function EquipmentCard(props: EquipmentCardProps) {
                     scrollUpgrade={equipment.scroll_upgrade} 
                     potentialGrade={equipment.potential_option_grade}
                     equipItem={true} />
-                {/* <EquipmentCardHeader 
-                    starforce={equipment.starforce} 
-                    name={equipment.item_name} 
-                    scrollUpgrade={equipment.scroll_upgrade} 
-                    potentialGrade={equipment.potential_option_grade} /> */}
             </div>
             <div className='equipment-segment item-details'>
                 <img className="item-image" src={equipment.item_icon} />
@@ -46,7 +41,7 @@ function EquipmentCard(props: EquipmentCardProps) {
                     exceptionalOptions={equipment.item_exceptional_option} />
             </div>
             {equipment.potential_option_grade !== null &&
-                <div className='equipment-potential'>
+                <div className='equipment-segment equipment-potential'>
                     <EquipmentPotential 
                         flag={equipment.potential_option_flag} 
                         grade={equipment.potential_option_grade} 

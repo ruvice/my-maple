@@ -1,3 +1,5 @@
+import { Characters } from "../store/characterStore";
+
 // Used for Maplesea Open APIs
 export function getAPIDate(): string {
     const now = new Date();
@@ -58,4 +60,42 @@ export function getDDMMString(dateString: string): string {
     });
   
     return `${day}/${month}`;
+}
+
+export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export function saveCharacterData(
+    opaqueId: string,
+    configVersion: string,
+    data: Characters
+) {
+    const apiDate = getAPIDate();
+    const newKey = `MyMaple-${opaqueId}-${configVersion}-${apiDate}`;
+  
+    // Step 1: Check for existing keys in localStorage with same opaqueId
+    const keysToDelete: string[] = [];
+  
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith(`MyMaple-${opaqueId}-`) && key !== newKey) {
+        keysToDelete.push(key);
+      }
+    }
+  
+    // Step 2: Delete any outdated keys
+    console.log('Deleting stale cached character info')
+    keysToDelete.forEach((key) => localStorage.removeItem(key));
+  
+    // Step 3: Save new data
+    localStorage.setItem(newKey, JSON.stringify(data));
+}
+
+export function loadCharacterData(
+    opaqueId: string,
+    configVersion: string
+): Characters | null {
+    const apiDate = getAPIDate();
+    const newKey = `MyMaple-${opaqueId}-${configVersion}-${apiDate}`;
+    const raw = localStorage.getItem(newKey);
+    return raw ? JSON.parse(raw) : null;
 }

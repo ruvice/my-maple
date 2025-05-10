@@ -3,6 +3,7 @@ import "./StatLayout.css"
 import { useModal } from '../../utils/useModal'
 import { Stat } from '../../types/types'
 import StatLine from './StatLine'
+import LoadingView from '../common/Loading/LoadingView'
 
 type StatLayoutProps = {
     stats: Stat[] | undefined
@@ -26,7 +27,6 @@ const GROUPINGS = {
 
 function StatLayout(props: StatLayoutProps) {
     const { stats } = props;
-    console.log(stats)
     const statCells = useMemo(() => {
         if (stats) {
             const divMapping: Record<string, JSX.Element> = {}
@@ -123,7 +123,7 @@ function StatLayout(props: StatLayoutProps) {
     //         return divMapping
     //     }
     // }, [stats])
-    if (stats === undefined || statCells  === undefined) { return <div>Failed to get stats</div>}
+    if (stats === undefined || statCells  === undefined) { return <LoadingView />}
     return (
         <div className="stat-container">
             {statCells}

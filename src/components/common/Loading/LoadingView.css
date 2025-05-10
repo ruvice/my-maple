@@ -1,0 +1,19 @@
+.loading-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.loading-gif {
+    height: 120px;
+    width: 120px;
+}
+
+.loading-text {
+    font-size: 12px;
+    color: white;
+    text-align: center;
+    margin: 0px;
+}

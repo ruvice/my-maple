@@ -3,6 +3,7 @@ import { Symbol } from '../../types/equipmentTypes';
 import { useModal } from '../../utils/useModal';
 import "./SymbolLayout.css"
 import SymbolCard from './SymbolCard';
+import LoadingView from '../common/Loading/LoadingView';
 
 type SymbolLayoutProps = {
     symbols: Symbol[]
@@ -23,7 +24,7 @@ function SymbolLayout(props: SymbolLayoutProps) {
             })
         }
     }, [symbols])
-    if (symbols === undefined) { return <div>Failed to get symbols</div>}
+    if (symbols === undefined) { return <LoadingView />}
     return (
         <>
             <div className="symbol-layout-grid">

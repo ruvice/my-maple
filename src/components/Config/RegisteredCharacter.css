@@ -1,0 +1,21 @@
+.registered-character-view {
+    width: 80%;
+    background-color: #333333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.registered-character-text {
+    color: white;
+    margin: 0px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.registered-character-delete {
+    cursor: pointer;
+}

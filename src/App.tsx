@@ -9,7 +9,6 @@ import AppInitLoader from './components/AppInitLoader';
 
 const queryClient = new QueryClient()
 function App() {
-    console.log(process.env.REACT_APP_OPEN_API_KEY)
     return (
         <QueryClientProvider client={queryClient}>
             <div className="App">

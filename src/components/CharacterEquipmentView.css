@@ -5,7 +5,7 @@
 
 .character-equipment-view-preset {
     display: flex;
-    margin-top: 8px;
+    margin-top: 2px;
     justify-content: end;
 }
 
@@ -24,7 +24,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
     font-size: 12px;
     border-radius: 4px; /* optional: round edges */
     color: white;

@@ -87,3 +87,5 @@ export interface Stat {
     stat_name: string;
     stat_value: string
 }
+
+export type TwitchBroadcasterConfiguration = Record<string, Ocid>

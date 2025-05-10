@@ -2,6 +2,7 @@ import React from 'react'
 import { Character, SymbolInfo } from '../types/types'
 import SymbolLayout from './Symbol/SymbolLayout';
 import './CharacterSymbolView.css'
+import LoadingView from './common/Loading/LoadingView';
 
 type CharacterSymbolProps = {
     symbol?: SymbolInfo;
@@ -10,7 +11,7 @@ type CharacterSymbolProps = {
 function CharacterSymbolView(props: CharacterSymbolProps) {
     const { symbol } = props;
     const symbols = symbol?.symbol
-    if (symbols === undefined) { return <div>Failed to get symbols</div> } 
+    if (symbols === undefined) { return <LoadingView /> } 
     return (
         <div className="character-symbol-view">
             <SymbolLayout symbols={symbols} />

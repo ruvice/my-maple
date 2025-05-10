@@ -43,7 +43,7 @@ function CharacterExpView(props: CharacterExpViewProps) {
 
     if  (expProgression === undefined) { return <div>Failed to retrieve exp data</div>}
     const renderLineChart = (
-        <LineChart width={260} height={200} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+        <LineChart width={220} height={200} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
             <Line type="monotone" dataKey="exp" stroke="#8884d8" />
             <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
             <XAxis 

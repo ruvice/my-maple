@@ -2,6 +2,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  font-family: 'MapleFont', sans-serif;
 }
 
 .rare-background {
@@ -78,3 +79,35 @@
 .gold {
     color: #FDCA00;
 }
+
+.cancel-gray-background {
+    background-color: #AAAAAA;
+}
+
+.dialog-white-background {
+    background-color: #EEEEEE;
+}
+
+/* @font-face {
+    font-family: 'MapleFont';
+    src: url('./assets/MaplestoryFont_TTF/Maplestory Light.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MapleFont';
+    src: url('./assets/MaplestoryFont_TTF/Maplestory Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+.light-text {
+    font-family: 'MapleFont';
+    font-weight: 400;
+}
+
+.bold-text {
+    font-family: 'MapleFont';
+    font-weight: 700;
+} */

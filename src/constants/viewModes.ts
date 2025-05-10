@@ -1,6 +1,6 @@
 export enum ViewMode {
     Ability = "Ability",
-    Equipment = "Equipment",
+    Equipment = "Equip",
     Symbols = "Symbols",
     EXP = "EXP"
 }

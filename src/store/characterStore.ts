@@ -3,7 +3,7 @@
     import { StatInfo, BasicCharacterInfo, Character, ExpData, ItemEquipInfo, Ocid, SymbolInfo } from '../types/types';
 
     interface CharacterStore {
-        characters: Record<string, Character>;
+        characters: Characters;
         setCharacterOCID: (name: string, ocid: Ocid) => void;
         setCharacterBasic: (name: string, basic: BasicCharacterInfo) => void;
         setCharacterItemEquip: (name: string, itemEquip: ItemEquipInfo) => void;
@@ -11,8 +11,12 @@
         setCharacterStat: (name: string, symbol: StatInfo) => void;
         setCharacterEXP: (name: string, basic: BasicCharacterInfo) => void;
         getCharacter: (name: string) => Character;
+        setCharacters: (characters:  Characters) => void;
+        getCharacters: () => Characters;
         reset: () => void;
     }
+
+    export type Characters = Record<string, Character>;
 
     export const useCharacterStore = create<CharacterStore>((set, get) => ({
         characters: {},
@@ -100,4 +104,10 @@
                     },
                 },
         })),
+
+        setCharacters: (charaters: Characters) => {
+            set(() => ({ characters: charaters }));
+        },
+
+        getCharacters: () => get().characters
     }));
