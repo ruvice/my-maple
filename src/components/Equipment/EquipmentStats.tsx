@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { ItemAddOption, ItemBaseOption, ItemEtcOption, ItemExceptionalOption, ItemStarForceOption, ItemTotalOption } from '../../types/equipmentTypes'
+import { ItemAddOption, ItemBaseOption, ItemEtcOption, ItemExceptionalOption, ItemStarForceOption, ItemTotalOption } from '@ruvice/my-maple-models'
 import EquipmentStatLine from './EquipmentStatLine';
 
 type EquipmentStatsProps = {

@@ -1,7 +1,7 @@
 import React, { JSX, useMemo } from 'react'
 import "./StatLayout.css"
 import { useModal } from '../../utils/useModal'
-import { Stat } from '../../types/types'
+import { Stat } from '@ruvice/my-maple-models'
 import StatLine from './StatLine'
 import LoadingView from '../common/Loading/LoadingView'
 
@@ -22,7 +22,7 @@ function StatLayout(props: StatLayoutProps) {
     const statCells = useMemo(() => {
         if (stats) {
             const divMapping: Record<string, JSX.Element> = {}
-            let minAtt: string = "", maxAtt: string = "", cdrSec: string = "", cdr: string = ""
+            let minAtt: number = 0, maxAtt: number = 0, cdrSec: number = 0, cdr: number = 0
             stats.forEach((stat) => {
                 const slot = stat.stat_name
                 const slotKey = slot.toLowerCase().replace(/\s+/g, '');
@@ -47,13 +47,25 @@ function StatLayout(props: StatLayoutProps) {
             })
 
             // Handling ATT Stat
-            const statAtt = `${parseInt(minAtt).toLocaleString()} - ${parseInt(maxAtt).toLocaleString()}`
-            divMapping['statatt'] = (<StatLine key={'statatt'} slotKey={'statatt'} stat={{stat_name:"Stat Att", stat_value: statAtt}} />)
+            const statAtt = `${minAtt.toLocaleString()} - ${maxAtt.toLocaleString()}`
+            divMapping['statatt'] = (
+                <StatLine 
+                key={'statatt'} 
+                slotKey={'statatt'} 
+                stat={{stat_name:"Stat Att", stat_value: 0}} 
+                displayValue={statAtt} />
+            )
 
             
             // Handling Cooldown Reduction
             const cooldownReduction = `${cdrSec}s / ${cdr}%`
-            divMapping['cooldownreduction'] = (<StatLine key={'cooldownreduction'} slotKey={'cooldownreduction'} stat={{stat_name:"Cooldown Reduction", stat_value: cooldownReduction}} />)
+            divMapping['cooldownreduction'] = (
+                <StatLine 
+                    key={'cooldownreduction'} 
+                    slotKey={'cooldownreduction'} 
+                    stat={{stat_name:"Cooldown Reduction", stat_value: 0}} 
+                    displayValue={cooldownReduction} />
+                )
 
             return ORDER.map((slotKey) => divMapping[slotKey])
         }

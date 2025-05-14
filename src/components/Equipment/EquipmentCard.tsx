@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Equipment } from '../../types/equipmentTypes'
+import { Equipment, Potential } from '@ruvice/my-maple-models'
 import EquipmentStats from './EquipmentStats'
 import EquipmentPotential from './EquipmentPotential'
 import "./EquipmentCard.css"
@@ -13,13 +13,6 @@ type EquipmentCardProps = {
 
 function EquipmentCard(props: EquipmentCardProps) {
     const { equipment, hide } = props
-    const maxStarforce = getMaximumStars(
-        parseInt(equipment.scroll_upgrade), 
-        parseInt(equipment.scroll_upgradeable_count), 
-        parseInt(equipment.scroll_resilience_count), 
-        equipment.item_base_option.base_equipment_level,
-        equipment.item_name
-    )
     if (equipment === undefined) {
         return <p className="equipment-stat-line-text">Failed to retreive equipment information</p>
     }
@@ -28,7 +21,7 @@ function EquipmentCard(props: EquipmentCardProps) {
             <div className='equipment-segment item-header'>
                 <CardHeader 
                     starforce={equipment.starforce}
-                    maxStarforce={maxStarforce}
+                    maxStarforce={equipment.maxStarforce}
                     name={equipment.item_name} 
                     scrollUpgrade={equipment.scroll_upgrade} 
                     potentialGrade={equipment.potential_option_grade}
@@ -48,7 +41,7 @@ function EquipmentCard(props: EquipmentCardProps) {
                     starforceOptions={equipment.item_starforce_option}
                     exceptionalOptions={equipment.item_exceptional_option} />
             </div>
-            {equipment.potential_option_grade !== null &&
+            {equipment.potential_option_grade !== undefined &&
                 <div className='equipment-segment equipment-potential'>
                     <EquipmentPotential 
                         flag={equipment.potential_option_flag} 
@@ -59,7 +52,7 @@ function EquipmentCard(props: EquipmentCardProps) {
                         isAdditional={false} />
                 </div>
             }
-            {equipment.additional_potential_option_grade !== null &&
+            {equipment.additional_potential_option_grade !== undefined &&
                 <div className='equipment-segment equipment-potential'>
                     <EquipmentPotential 
                         flag={equipment.additional_potential_option_flag} 

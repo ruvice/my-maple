@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
-import { Stat } from '../../types/types';
+import { Stat } from '@ruvice/my-maple-models';
 import './StatLine.css'
 
 type StatLineProps = {
     slotKey: string;
-    stat: Stat
+    stat: Stat;
+    displayValue?: string;
 }
 
 const PERCENTAGE_STATS_SET = new Set([
@@ -22,7 +23,7 @@ function parseStrictInt(str: string): number | null {
 }
 
 function StatLine(props: StatLineProps) {
-    const { slotKey, stat } = props;
+    const { slotKey, stat, displayValue } = props;
     let label = stat.stat_name;
     // Handling stupid edge cases
     switch (stat.stat_name) {
@@ -36,12 +37,12 @@ function StatLine(props: StatLineProps) {
             break;
     }
     
-    const value = parseStrictInt(stat.stat_value)?.toLocaleString() ?? stat.stat_value
+    const value = stat.stat_value.toLocaleString() ?? stat.stat_value
 
     return (
         <div className={`${slotKey} stat-cell`}>
             <p className={`stat-line name ${slotKey === 'combatpower' && 'gold'} bold-text`}>{label}</p>
-            <p className={`stat-line value ${slotKey === 'combatpower' && 'gold'} light-text`}>{value}{PERCENTAGE_STATS_SET.has(slotKey) && '%'}</p>
+            <p className={`stat-line value ${slotKey === 'combatpower' && 'gold'} light-text`}>{displayValue ? displayValue : value}{PERCENTAGE_STATS_SET.has(slotKey) && '%'}</p>
         </div>
     )
 }

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useCharacterStore } from '../store/characterStore'
-import { Character } from '../types/types'
+import { Character } from '@ruvice/my-maple-models'
 import EquipmentCard from './Equipment/EquipmentCard'
 import "./CharacterCard.css"
 import EquipmentLayout from './Equipment/EquipmentLayout'
@@ -32,13 +32,13 @@ function CharacterCard(props: CharacterCardProps) {
         currentViewRef.current = mode;
     }
 
-    const jobName = character.basic?.character_class ?? ''
-    const background = imageMap[jobName];
-    const overlayBackground = backgroundMap[jobName]
-
     if (character.basic === undefined) {
         return <div>Failed to retreive character information</div>
     }
+    const jobName = character.basic.character_class
+    const background = imageMap[jobName];
+    const overlayBackground = backgroundMap[jobName]
+
     const mapleScouterURL = 'https://www.mapleseascouter.com/character/' + character.ocid
     const mapleStalkerSeaURL = 'https://www.maplestalkersea.com/equipment?character=' + character.name
     const mapleGGURL = 'https://msea.maple.gg/u/' + character.name

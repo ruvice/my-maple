@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Equipment } from '../types/equipmentTypes'
+import { Equipment } from '@ruvice/my-maple-models'
 import EquipmentLayout from './Equipment/EquipmentLayout';
 import './CharacterEquipmentView.css'
 import LoadingView from './common/Loading/LoadingView';
@@ -18,6 +18,7 @@ const CharacterEquipmentView = ({ active, preset1, preset2, preset3 }: Character
   if (active === undefined && preset1 ===  undefined && preset2 === undefined && preset3 === undefined) {
     return (<LoadingView />)
   }
+  console.log(loadouts)
 
   return (
     <div className="character-equipment-view">

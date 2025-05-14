@@ -3,7 +3,8 @@ import {
     QueryClientProvider,
     useQueryClient,
   } from '@tanstack/react-query'
-import { OpenAPIOcidQueryResponse, TwitchBroadcasterConfiguration } from '../../types/types'
+import { OpenAPIOcidQueryResponse } from '@ruvice/my-maple-models'
+import { TwitchBroadcasterConfiguration } from '../../types/types'
 import { fetchCharacterOCID } from '../../api'
 import { useModal } from '../../utils/useModal'
 import ChatDialog from '../common/ChatDialog/ChatDialog'

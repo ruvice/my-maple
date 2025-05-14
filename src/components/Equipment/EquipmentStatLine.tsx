@@ -1,5 +1,5 @@
 import React from 'react'
-import { ItemTotalOption, ItemAddOption, ItemBaseOption, ItemEtcOption, ItemStarForceOption, ItemExceptionalOption } from '../../types/equipmentTypes'
+import { ItemTotalOption, ItemAddOption, ItemBaseOption, ItemEtcOption, ItemStarForceOption, ItemExceptionalOption } from '@ruvice/my-maple-models'
 import './EquipmentStats.css'
 
 type EquipmentStatLineProps = {
@@ -33,20 +33,20 @@ function EquipmentStatLine(props:  EquipmentStatLineProps) {
     if (base !== undefined && base) parts.push({ value: base, className: 'base' });
 
     const add = addOptions[statKey];
-    if (add !== undefined && add != "0") parts.push({ value: add, className: 'add' });
+    if (add !== undefined && add !== 0) parts.push({ value: add, className: 'add' });
 
     const etc = etcOptions[statKey];
-    if (etc !== undefined && etc !== "0") parts.push({ value: etc, className: 'etc' });
+    if (etc !== undefined && etc !== 0) parts.push({ value: etc, className: 'etc' });
 
     const starforce = starforceOptions[statKey];
-    if (starforce !== undefined && starforce !== "0") parts.push({ value: starforce, className: 'starforce' });
+    if (starforce !== undefined && starforce !== 0) parts.push({ value: starforce, className: 'starforce' });
 
     const exceptional = exceptionalOptions[statKey];
     let percentageModifier = false
     if (statKey === 'all_stat' || statKey === 'boss_damage' || statKey === 'damage' || statKey === 'max_hp_rate' || statKey === "max_mp_rate") {
         percentageModifier = true
     }
-    if (exceptional !== undefined && exceptional !== "0") parts.push({ value: exceptional, className: 'exceptional' });
+    if (exceptional !== undefined && exceptional !== 0) parts.push({ value: exceptional, className: 'exceptional' });
 
 
     return (

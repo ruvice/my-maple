@@ -2,7 +2,7 @@ import React from 'react'
 import "./EquipmentPotential.css"
 
 type EquipmentPotentialProps = {
-    flag: string,
+    flag: boolean,
     grade: string,
     option: string,
     option2: string,
@@ -14,7 +14,7 @@ function EquipmentPotential(props: EquipmentPotentialProps) {
     const { flag, grade, option, option2, option3, isAdditional } = props;
     return (
         <div>
-            {flag === 'true' ?
+            {flag ?
             <>
                 <p className='equipment-stat-line-text'>Potential talent is sealed.</p>
                 <p className='equipment-stat-line-text'>(You can check by clicking on the Item window's magnifying button.)</p>

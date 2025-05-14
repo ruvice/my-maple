@@ -1,5 +1,5 @@
 import React from 'react'
-import { StatInfo } from '../types/types'
+import { StatInfo } from '@ruvice/my-maple-models'
 import StatLayout from './Stat/StatLayout';
 import LoadingView from './common/Loading/LoadingView';
 

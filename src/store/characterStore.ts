@@ -1,6 +1,6 @@
     // store/characterStore.ts
     import { create } from 'zustand';
-    import { StatInfo, BasicCharacterInfo, Character, ExpData, ItemEquipInfo, Ocid, SymbolInfo } from '../types/types';
+    import { StatInfo, BasicCharacterInfo, Character, ExpData, ItemEquipInfo, Ocid, SymbolInfo } from '@ruvice/my-maple-models';
 
     interface CharacterStore {
         characters: Characters;
@@ -75,7 +75,7 @@
             const expData: ExpData = {
                 date: basic.date,
                 exp: basic.character_exp,
-                exp_rate: basic.character_exp_rate
+                exp_rate: basic.character_exp_rate.toString()
             };
             
             set((state) => {

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { ExpData } from '../types/types'
+import { ExpData } from '@ruvice/my-maple-models'
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import { getDDMMString } from '../utils/utils';
 import './CharacterExpView.css'

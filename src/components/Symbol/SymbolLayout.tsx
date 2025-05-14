@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react'
-import { Symbol } from '../../types/equipmentTypes';
+import { MapleSymbol } from '@ruvice/my-maple-models';
 import { useModal } from '../../utils/useModal';
 import "./SymbolLayout.css"
 import SymbolCard from './SymbolCard';
 import LoadingView from '../common/Loading/LoadingView';
 
 type SymbolLayoutProps = {
-    symbols: Symbol[]
+    symbols: MapleSymbol[]
 }
 
 function SymbolLayout(props: SymbolLayoutProps) {

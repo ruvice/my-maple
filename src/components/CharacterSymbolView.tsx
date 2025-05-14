@@ -1,5 +1,5 @@
 import React from 'react'
-import { Character, SymbolInfo } from '../types/types'
+import { Character, SymbolInfo } from '@ruvice/my-maple-models'
 import SymbolLayout from './Symbol/SymbolLayout';
 import './CharacterSymbolView.css'
 import LoadingView from './common/Loading/LoadingView';

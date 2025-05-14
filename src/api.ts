@@ -1,9 +1,12 @@
 import axios from "axios"
-import { Ocid, OpenAPIStatResponse, OpenAPICharacterBasicResponse, OpenAPIItemEquipmentResponse, OpenAPIOcidQueryResponse, OpenAPISymbolEquipmentResponse, Character, ProxyCharacterResponse } from "./types/types"
+import { Ocid, OpenAPIStatResponse, OpenAPICharacterBasicResponse, OpenAPIItemEquipmentResponse, OpenAPIOcidQueryResponse, OpenAPISymbolEquipmentResponse, Character } from "@ruvice/my-maple-models"
 import { getAPIDate, getAPIDateForXDaysAgo } from "./utils/utils"
 
-const domain = 'https://my-maple-proxy.vercel.app/api/nexonProxy';
-const batchFetchDomain = 'https://my-maple-proxy.vercel.app/api/batchFetch';
+const domain = 'https://my-maple-proxy-git-staging-ruvices-projects.vercel.app/api/nexonProxy';
+// const batchFetchDomain = 'https://my-maple-proxy-git-staging-ruvices-projects.vercel.app/api/batchFetch';
+
+const batchFetchDomain = 'http://localhost:3000/api/batchFetch';
+
 
 const OCID_PATH = "maplestorysea/v1/id";
 const BASIC_PATH = "maplestorysea/v1/character/basic";
@@ -42,5 +45,5 @@ export const fetchCharacterSymbol = async (ocid: Ocid) => getFromProxy<OpenAPISy
 export const fetchCharacterEXP = async (ocid: Ocid, offset: number) => 
     getFromProxy<OpenAPICharacterBasicResponse>({'path': BASIC_PATH, "ocid": ocid, "date": getAPIDateForXDaysAgo(offset)});
 export const fetchCharacterStat = async (ocid: Ocid) => getFromProxy<OpenAPIStatResponse>({'path': STAT_PATH, "ocid": ocid, "date": getAPIDate()});
-export const fetchCharacter = async(characterName: string) => batchFetchFromProxy<ProxyCharacterResponse>({"character_name": characterName});
+export const fetchCharacter = async(characterName: string) => batchFetchFromProxy<Character>({"character_name": characterName});
 

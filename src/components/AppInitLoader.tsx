@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCharacterStore } from '../store/characterStore';
 import { fetchCharacter } from '../api';
-import { TwitchBroadcasterConfiguration, ProxyCharacterResponse } from '../types/types';
+import { TwitchBroadcasterConfiguration } from '../types/types';
+import { Character } from '@ruvice/my-maple-models'
 import { loadCharacterData, saveCharacterData } from '../utils/utils';
 
 export default function AppInitLoader() {
@@ -59,7 +60,7 @@ export default function AppInitLoader() {
         };
         const loadCharacters = async() => {{
             for (const characterName of Object.keys(configuration)) {
-                const charRes = await queryClient.fetchQuery<ProxyCharacterResponse>({
+                const charRes = await queryClient.fetchQuery<Character>({
                     queryKey: ['character', characterName],
                     queryFn: () => fetchCharacter(characterName),
                 });
