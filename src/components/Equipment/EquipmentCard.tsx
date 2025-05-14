@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import { Equipment } from '../../types/equipmentTypes'
 import EquipmentStats from './EquipmentStats'
 import EquipmentPotential from './EquipmentPotential'
-import EquipmentCardHeader from './EquipmentCardHeader'
 import "./EquipmentCard.css"
 import CardHeader from '../Card/CardHeader'
+import { getMaximumStars } from '../../utils/equipmentUtils'
 
 type EquipmentCardProps = {
     equipment: Equipment,
@@ -13,6 +13,13 @@ type EquipmentCardProps = {
 
 function EquipmentCard(props: EquipmentCardProps) {
     const { equipment, hide } = props
+    const maxStarforce = getMaximumStars(
+        parseInt(equipment.scroll_upgrade), 
+        parseInt(equipment.scroll_upgradeable_count), 
+        parseInt(equipment.scroll_resilience_count), 
+        equipment.item_base_option.base_equipment_level,
+        equipment.item_name
+    )
     if (equipment === undefined) {
         return <p className="equipment-stat-line-text">Failed to retreive equipment information</p>
     }
@@ -20,7 +27,8 @@ function EquipmentCard(props: EquipmentCardProps) {
         <div className="equipment-card" onClick={hide}>
             <div className='equipment-segment item-header'>
                 <CardHeader 
-                    starforce={equipment.starforce} 
+                    starforce={equipment.starforce}
+                    maxStarforce={maxStarforce}
                     name={equipment.item_name} 
                     scrollUpgrade={equipment.scroll_upgrade} 
                     potentialGrade={equipment.potential_option_grade}

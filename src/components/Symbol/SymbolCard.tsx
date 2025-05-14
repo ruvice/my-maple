@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { Symbol } from '../../types/equipmentTypes'
 import "./SymbolCard.css"
-import EquipmentCardHeader from '../Equipment/EquipmentCardHeader'
 import CardHeader from '../Card/CardHeader'
 
 enum SymbolRegion {

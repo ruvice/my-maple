@@ -99,3 +99,4 @@ export function loadCharacterData(
     const raw = localStorage.getItem(newKey);
     return raw ? JSON.parse(raw) : null;
 }
+

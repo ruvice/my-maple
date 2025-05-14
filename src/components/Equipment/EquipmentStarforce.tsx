@@ -6,7 +6,7 @@ type StarForceBarProps = {
   total?: number;
 };
 
-export default function EquipmentStarforce({ filled, total = 25 }: StarForceBarProps) {
+export default function EquipmentStarforce({ filled, total = 0 }: StarForceBarProps) {
     const count = Math.max(0, Math.min(Number(filled), total));
     const groupCount = Math.ceil(total / 5);
   
