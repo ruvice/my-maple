@@ -2,11 +2,8 @@ import axios from "axios"
 import { Ocid, OpenAPIStatResponse, OpenAPICharacterBasicResponse, OpenAPIItemEquipmentResponse, OpenAPIOcidQueryResponse, OpenAPISymbolEquipmentResponse, Character } from "@ruvice/my-maple-models"
 import { getAPIDate, getAPIDateForXDaysAgo } from "./utils/utils"
 
-const domain = 'https://my-maple-proxy-git-staging-ruvices-projects.vercel.app/api/nexonProxy';
-// const batchFetchDomain = 'https://my-maple-proxy-git-staging-ruvices-projects.vercel.app/api/batchFetch';
-
-const batchFetchDomain = 'http://localhost:3000/api/batchFetch';
-
+const domain = 'https://my-maple-proxy.vercel.app/api/nexonProxy';
+const batchFetchDomain = 'https://my-maple-proxy.vercel.app/api/batchFetch';
 
 const OCID_PATH = "maplestorysea/v1/id";
 const BASIC_PATH = "maplestorysea/v1/character/basic";
