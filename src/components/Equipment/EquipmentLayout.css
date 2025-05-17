@@ -1,112 +1,112 @@
 .equipment-layout-grid {
     display: grid;
     grid-template-areas: 
-    "ring1       .         hat             .                    emblem"
-    "ring2       pendant   faceaccessory   .                    badge"
-    "ring3       pendant2  eyeaccessory    earring              medal"
-    "ring4       weapon    top             shoulderdecoration   secondaryweapons"
-    "pocketitem  belt      bottom          glove                cape"
-    ".           .         shoes           .                    mechanicalheart";
-    grid-template-columns: repeat(5, 42px);
-    grid-template-rows: repeat(6, 42px);
+    "Ring1       .         Hat             .                    Emblem"
+    "Ring2       Pendant   FaceAccessory   .                    Badge"
+    "Ring3       Pendant2  EyeAccessory    Earring              Medal"
+    "Ring4       Weapon    Top             ShoulderDecoration   SecondaryWeapons"
+    "PocketItem  Belt      Bottom          Glove                Cape"
+    ".           .         Shoes           .                    MechanicalHeart";
+    grid-template-columns: repeat(5, 36px);
+    grid-template-rows: repeat(6, 36px);
     gap: 2px 2px;
     justify-content: center;
 }
 
-.ring1 {
-    grid-area: ring1;
+.Ring1 {
+    grid-area: Ring1;
 }
 
-.ring2 {
-    grid-area: ring2;
+.Ring2 {
+    grid-area: Ring2;
 }
 
-.ring3 {
-    grid-area: ring3;
+.Ring3 {
+    grid-area: Ring3;
 }
 
-.ring4 {
-    grid-area: ring4;
+.Ring4 {
+    grid-area: Ring4;
 }
 
-.pocketitem {
-    grid-area: pocketitem;
+.PocketItem {
+    grid-area: PocketItem;
 }
 
-.pendant {
-    grid-area: pendant;
+.Pendant {
+    grid-area: Pendant;
 }
 
-.pendant2 {
-    grid-area: pendant2;
+.Pendant2 {
+    grid-area: Pendant2;
 }
 
-.weapon {
-    grid-area: weapon;
+.Weapon {
+    grid-area: Weapon;
 }
 
-.belt {
-    grid-area: belt;
+.Belt {
+    grid-area: Belt;
 }
 
-.hat {
-    grid-area: hat;
+.Hat {
+    grid-area: Hat;
 }
 
-.faceaccessory {
-    grid-area: faceaccessory;
+.FaceAccessory {
+    grid-area: FaceAccessory;
 }
 
-.eyeaccessory {
-    grid-area: eyeaccessory;
+.EyeAccessory {
+    grid-area: EyeAccessory;
 }
 
-.top {
-    grid-area: top;
+.Top {
+    grid-area: Top;
 }
 
-.bottom {
-    grid-area: bottom;
+.Bottom {
+    grid-area: Bottom;
 }
 
-.shoes {
-    grid-area: shoes;
+.Shoes {
+    grid-area: Shoes;
 }
 
-.earring {
-    grid-area: earring;
+.Earring {
+    grid-area: Earring;
 }
 
-.shoulderdecoration {
-    grid-area: shoulderdecoration;
+.ShoulderDecoration {
+    grid-area: ShoulderDecoration;
 }
 
-.glove {
-    grid-area: glove;
+.Glove {
+    grid-area: Glove;
 }
 
-.emblem {
-    grid-area: emblem;
+.Emblem {
+    grid-area: Emblem;
 }
 
-.badge {
-    grid-area: badge;
+.Badge {
+    grid-area: Badge;
 }
 
-.medal {
-    grid-area: medal;
+.Medal {
+    grid-area: Medal;
 }
 
-.secondaryweapons {
-    grid-area: secondaryweapons;
+.SecondaryWeapons {
+    grid-area: SecondaryWeapons;
 }
 
-.cape {
-    grid-area: cape;
+.Cape {
+    grid-area: Cape;
 }
 
-.mechanicalheart {
-    grid-area: mechanicalheart;
+.MechanicalHeart {
+    grid-area: MechanicalHeart;
 }
 
 .equipment-cell {
@@ -125,8 +125,8 @@
 }
 
 .equipment-cell-image {
-    height: 34px;
-    width: 34px;
+    height: 28px;
+    width: 28px;
     object-fit: contain; /* or 'cover' depending on the effect you want */
     display: block;
 }

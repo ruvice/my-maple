@@ -20,7 +20,7 @@ export function useModal() {
     const ModalRenderer = useCallback(() => {
         if (!content) return null;
         return <Modal onClose={hideModal} noBackdrop={noBackdrop}>{content}</Modal>;
-    }, [content, hideModal]);
+    }, [content, hideModal, noBackdrop]);
 
     return { showModal, hideModal, ModalRenderer };
 }

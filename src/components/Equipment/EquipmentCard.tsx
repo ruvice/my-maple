@@ -4,10 +4,9 @@ import EquipmentStats from './EquipmentStats'
 import EquipmentPotential from './EquipmentPotential'
 import "./EquipmentCard.css"
 import CardHeader from '../Card/CardHeader'
-import { getMaximumStars } from '../../utils/equipmentUtils'
 
 type EquipmentCardProps = {
-    equipment: Equipment,
+    equipment: Equipment;
     hide: () => void
 }
 

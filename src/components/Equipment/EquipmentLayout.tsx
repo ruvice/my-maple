@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import "./EquipmentLayout.css"
-import { Equipment } from '@ruvice/my-maple-models'
+import { Equipment, ItemEquipmentSlot } from '@ruvice/my-maple-models'
 import { useModal } from '../../utils/useModal'
 import EquipmentCard from './EquipmentCard'
 import LoadingView from '../common/Loading/LoadingView'
@@ -12,15 +12,10 @@ type EquipmentLayoutProps = {
 function EquipmentLayout(props: EquipmentLayoutProps) {
     const { equipments } = props;
     const  { showModal, hideModal, ModalRenderer } = useModal();
-    const slots = [
-        'ring1','hat','emblem','ring2','pendant','faceaccessory','badge','ring3','pendant2','eyeaccessory','earring','medal','ring4','weapon','top',
-        'pocketitem','belt','bottom','glove', 'cape', 'shoes', 'mechanicalheart', 'shoulderdecoration', 'secondaryweapons'
-    ]
-
     const equipmentMap = useMemo(() => {
-        const map: Record<string, Equipment> = {};
+        const map: Partial<Record<ItemEquipmentSlot, Equipment>> = {};
         equipments?.forEach((equipment) => {
-            const slotKey = equipment.item_equipment_slot.toLowerCase().replace(/\s+/g, '');
+            const slotKey = equipment.item_equipment_slot;
             map[slotKey] = equipment;
         });
         return map;
@@ -31,7 +26,7 @@ function EquipmentLayout(props: EquipmentLayoutProps) {
     return (
         <>
             <div className="equipment-layout-grid">
-                {slots.map((slotKey) => {
+                {(Object.values(ItemEquipmentSlot) as ItemEquipmentSlot[]).map((slotKey) => {
                     const equipment = equipmentMap[slotKey];
                     if (equipment) {
                         const potentialGrade = equipment.potential_option_grade?.toLowerCase();

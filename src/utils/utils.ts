@@ -1,4 +1,4 @@
-import { Characters } from "../store/characterStore";
+import { Characters, ServerCharacters } from "../store/characterStore";
 import { useTwitchStore } from "../store/twitchStore";
 import { CachedCharacterData } from "../types/types";
 
@@ -93,7 +93,7 @@ export function saveCharacterData(
     localStorage.setItem(newKey, JSON.stringify(data));
 }
 
-export function loadCharacterData(): Characters | null {
+export function loadCharacterData(): ServerCharacters | null {
     const opaqueId = useTwitchStore.getState().getChannelID();
     const configVersion = useTwitchStore.getState().getConfigVersion();
     const apiDate = getAPIDate();

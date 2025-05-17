@@ -17,16 +17,20 @@ function EquipmentStatLine(props:  EquipmentStatLineProps) {
     const { totalOptions, addOptions, baseOptions, etcOptions, starforceOptions, exceptionalOptions, statKey, label } = props;
     const parts: { value: number | string, className: string }[] = [];
     const modifier = statKey === 'equipment_level_decrease' ? '-' : '+';
-    const isPercent = ['all_stat', 'boss_damage', 'damage', 'max_hp_rate', 'max_mp_rate'].includes(statKey);
+    const isPercent = ['all_stat', 'boss_damage', 'damage', 'max_hp_rate', 'max_mp_rate', 'ignore_monster_armor'].includes(statKey);
 
+    let percentageModifier = false
+    if (statKey === 'all_stat' || statKey === 'boss_damage' || statKey === 'damage' || statKey === 'max_hp_rate' || statKey === "max_mp_rate") {
+        percentageModifier = true
+    }
     const total = totalOptions[statKey]
-    if (total == 0) { return null }
+    if (total === 0) { return null }
 
     const base = baseOptions[statKey];
     if (total == base) {
         return (
             <div className='equipment-stat-line'>
-                <p className="equipment-stat-line-text">{label} {modifier}{total}</p>
+                <p className="equipment-stat-line-text">{label} {modifier}{total}{isPercent && '%'}</p>
             </div>
         )
     }
@@ -42,13 +46,7 @@ function EquipmentStatLine(props:  EquipmentStatLineProps) {
     if (starforce !== undefined && starforce !== 0) parts.push({ value: starforce, className: 'starforce' });
 
     const exceptional = exceptionalOptions[statKey];
-    let percentageModifier = false
-    if (statKey === 'all_stat' || statKey === 'boss_damage' || statKey === 'damage' || statKey === 'max_hp_rate' || statKey === "max_mp_rate") {
-        percentageModifier = true
-    }
     if (exceptional !== undefined && exceptional !== 0) parts.push({ value: exceptional, className: 'exceptional' });
-
-
     return (
         <div className='equipment-stat-line'>
             <p className="equipment-stat-line-text">

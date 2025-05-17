@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Character } from '@ruvice/my-maple-models'
+import { Character, getLocalisedCharacterClass, MapleServer } from '@ruvice/my-maple-models'
 import "./CharacterCard.css"
 import CharacterEquipmentView from './CharacterEquipmentView'
 import { ViewMode } from '../constants/viewModes';
@@ -8,9 +8,6 @@ import Header from './common/Header/Header'
 import CharacterAbilityView from './CharacterAbilityView'
 import CharacterSymbolView from './CharacterSymbolView'
 import CharacterExpView from './CharacterExpView'
-import mapleScouterLogo from '../assets/maplescouter_logo.png'
-import mapleStalkerSeaLogo from '../assets/maplestalkersea_logo.png'
-import MapleGGLogo from '../assets/MapleGGLogo'
 import { imageMap, backgroundMap } from '../utils/imageMap'
 import { ArrowLeft, ArrowRight, RotateCw } from 'lucide-react';
 import { loadCharacters } from '../api'
@@ -18,6 +15,7 @@ import { LoadCharacterRequest } from '../types/types';
 import { useQueryClient } from '@tanstack/react-query';
 import { useModal } from '../utils/useModal';
 import Tooltip from './common/Tooltip/Tooltip';
+import CharacterCardExternalLinks from './CharacterCardExternalLinks';
 
 type CharacterCardProps = {
     character: Character;
@@ -27,12 +25,18 @@ type CharacterCardProps = {
 
 function CharacterCard(props: CharacterCardProps) {
     const { character, onNext, onPrev } = props
-    const { currentView, setView } = useViewStore();
+    const { currentView, setView, currentServer, setCurrentServer } = useViewStore();
     const { showModal, hideModal, ModalRenderer } = useModal();
+    const currentServerRef = useRef(currentServer);
     const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
     const currentViewRef = useRef<ViewMode>(currentView);
     const queryClient = useQueryClient()
-    const handleHeaderSelection = (mode: ViewMode) => {
+    const handleServerHeaderSelection = (server: MapleServer) => {
+        setCurrentServer(server);
+        currentServerRef.current = server
+    }
+
+    const handleCharacterInfoHeaderSelection = (mode: ViewMode) => {
         setView(mode)
         currentViewRef.current = mode;
     }
@@ -40,13 +44,9 @@ function CharacterCard(props: CharacterCardProps) {
     if (character.basic === undefined) {
         return <div>Failed to retreive character information</div>
     }
-    const jobName = character.basic.character_class
-    const background = imageMap[jobName];
-    const overlayBackground = backgroundMap[jobName]
-
-    const mapleScouterURL = 'https://www.mapleseascouter.com/character/' + character.ocid
-    const mapleStalkerSeaURL = 'https://www.maplestalkersea.com/equipment?character=' + character.name
-    const mapleGGURL = 'https://msea.maple.gg/u/' + character.name
+    const jobName = getLocalisedCharacterClass(character.basic.character_class, currentServer)
+    const background = imageMap[character.basic.character_class];
+    const overlayBackground = backgroundMap[character.basic.character_class]
 
     const refreshData = () => {
         const loadCharacterRequest: LoadCharacterRequest = {
@@ -87,8 +87,11 @@ function CharacterCard(props: CharacterCardProps) {
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat'
                 }} >
+            <Header 
+                options={MapleServer} 
+                onSelected={handleServerHeaderSelection} 
+                currentRef={currentServerRef} />
             <div className="character-info-grid">
-                
                 <div className="character-card-controls"><ArrowLeft color={'white'} size={12} onClick={onPrev}/></div>
                 <div className='character-card-basic-info-container'>
                     <div className="character-card-image-div">
@@ -105,19 +108,15 @@ function CharacterCard(props: CharacterCardProps) {
                                 onPointerLeave={handlePointerLeave}
                                 />
                         </div>
-                        <p className="character-card-line-text">{character.basic?.character_class}</p>
+                        <p className="character-card-line-text">{jobName}</p>
                         <p className="character-card-line-text">Level {character.basic?.character_level}</p>
                         <p className="character-card-line-text">{character.basic?.world_name}</p>
                     </div>
                 </div>
                 <div className="character-card-controls"><ArrowRight color={'white'} size={12} onClick={onNext}/></div>
-                <div className='character-card-logo-container'>
-                    <img className="character-card-logo-image character-card-logo" src={mapleScouterLogo} alt="MapleScouter" onClick={() => window.open(mapleScouterURL, '_blank')}/>
-                    <img className="character-card-logo-image character-card-logo" src={mapleStalkerSeaLogo} alt="MapleStalkerSEA" onClick={() => window.open(mapleStalkerSeaURL, '_blank')}/>
-                    <MapleGGLogo className="character-card-logo" onClick={() => window.open(mapleGGURL, '_blank')} />
-                </div>
+                <CharacterCardExternalLinks character={character} />
             </div>
-            <Header options={ViewMode} onSelected={handleHeaderSelection} currentRef={currentViewRef} />
+            <Header options={ViewMode} onSelected={handleCharacterInfoHeaderSelection} currentRef={currentViewRef} />
             <div className="character-detailed-info">
                 {currentView === ViewMode.Ability && <CharacterAbilityView stat={character.stat}/>}
                 {currentView === ViewMode.Equipment && 

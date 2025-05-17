@@ -1,24 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCharacterStore } from '../store/characterStore';
-import { fetchCharacter, loadCharacters } from '../api';
-import { CachedCharacterData, LoadCharacterRequest, TwitchBroadcasterConfiguration } from '../types/types';
-import { Character } from '@ruvice/my-maple-models'
-import { loadCharacterData, saveCharacterData } from '../utils/utils';
+import { loadCharacters } from '../api';
+import { LoadCharacterRequest, TwitchBroadcasterConfiguration } from '../types/types';
+import { MapleServer } from '@ruvice/my-maple-models'
+import { loadCharacterData } from '../utils/utils';
 import { useTwitchStore } from '../store/twitchStore';
 
 export default function AppInitLoader() {
     const queryClient = useQueryClient()
     // Selector based access
     const setCharacters = useCharacterStore((s) => s.setCharacters);
-    const getCharacters = useCharacterStore((s) => s.getCharacters);
-    const setCharacter = useCharacterStore((s) => s.setCharacter);
     const setConfiguration = useTwitchStore((s) => s.setConfiguration);
     const setChannelID = useTwitchStore((s) => s.setChannelID);
     const setConfigVersion = useTwitchStore((s) => s.setConfigVersion);
-    const [localTwitchConfiguration, setLocalTwitchConfiguration] = useState<TwitchBroadcasterConfiguration>({})
+    const getTwitchConfiguration = useTwitchStore((s) => s.getConfiguration);
+    const [localTwitchConfiguration, setLocalTwitchConfiguration] = useState<TwitchBroadcasterConfiguration>(getTwitchConfiguration())
 
-    const testCharacters = ['lqsKniGhT']
     useEffect(() => {
         const interval = setInterval(() => {
           if (window.Twitch && window.Twitch.ext && window.Twitch.ext.configuration?.broadcaster) {
@@ -65,7 +63,12 @@ export default function AppInitLoader() {
             return
         };
         const cachedCharacters = loadCharacterData()
-        if (cachedCharacters == null || Object.keys(cachedCharacters).length === 0) {
+        const isCacheEmpty =
+            !cachedCharacters ||
+            Object.values(MapleServer).every(
+                (server) => Object.keys(cachedCharacters[server] ?? {}).length === 0
+            );
+        if (isCacheEmpty) {
             console.log('Fetching latest character info')
             const loadCharacterRequest: LoadCharacterRequest = {
                 configuration: localTwitchConfiguration,

@@ -1,123 +1,150 @@
-    // store/characterStore.ts
-    import { create } from 'zustand';
-    import { StatInfo, BasicCharacterInfo, Character, ExpData, ItemEquipInfo, Ocid, SymbolInfo } from '@ruvice/my-maple-models';
+// store/characterStore.ts
+import { create } from 'zustand';
+import {
+  StatInfo,
+  BasicCharacterInfo,
+  Character,
+  ExpData,
+  ItemEquipInfo,
+  Ocid,
+  SymbolInfo,
+  MapleServer
+} from '@ruvice/my-maple-models';
 
-    interface CharacterStore {
-        characters: Characters;
-        setCharacterOCID: (name: string, ocid: Ocid) => void;
-        setCharacterBasic: (name: string, basic: BasicCharacterInfo) => void;
-        setCharacterItemEquip: (name: string, itemEquip: ItemEquipInfo) => void;
-        setCharacterSymbol: (name: string, symbol: SymbolInfo) => void;
-        setCharacterStat: (name: string, symbol: StatInfo) => void;
-        setCharacterEXP: (name: string, basic: BasicCharacterInfo) => void;
-        getCharacter: (name: string) => Character;
-        setCharacters: (characters:  Characters) => void;
-        getCharacters: () => Characters;
-        setCharacter: (name: string, character: Character) => void;
-        reset: () => void;
-    }
+export type Characters = Record<string, Character>;
+export type ServerCharacters = Record<MapleServer, Characters>;
 
-    export type Characters = Record<string, Character>;
+interface CharacterStore {
+  server: ServerCharacters;
 
-    export const useCharacterStore = create<CharacterStore>((set, get) => ({
-        characters: {},
+  setCharacterOCID: (name: string, server: MapleServer, ocid: Ocid) => void;
+  setCharacterBasic: (name: string, server: MapleServer, basic: BasicCharacterInfo) => void;
+  setCharacterItemEquip: (name: string, server: MapleServer, itemEquip: ItemEquipInfo) => void;
+  setCharacterSymbol: (name: string, server: MapleServer, symbol: SymbolInfo) => void;
+  setCharacterStat: (name: string, server: MapleServer, stat: StatInfo) => void;
+  setCharacterEXP: (name: string, server: MapleServer, expData: ExpData) => void;
 
-        setCharacterOCID: (name, ocid) =>
-            set((state) => ({
-            characters: {
-                ...state.characters,
-                [name]: {
-                    ...state.characters[name],
-                    name,
-                    ocid,
-                },
-            },
-            })),
+  setCharacters: (characters: ServerCharacters) => void;
+  getServerCharacters: () => ServerCharacters;
+  getCharacter: (name: string, server: MapleServer) => Character | undefined;
+  setCharacter: (name: string, server: MapleServer, character: Character) => void;
 
-        getCharacter: (name) => get().characters[name],
+  reset: () => void;
+}
 
-        reset: () => set({ characters: {} }),
+const initialServerCharacters: ServerCharacters = {
+  [MapleServer.KMS]: {},
+  [MapleServer.SEA]: {}
+};
 
-        setCharacterBasic: (name: string, basic: BasicCharacterInfo) =>
-            set((state) => ({
-                characters: {
-                    ...state.characters,
-                    [name]: {
-                        ...state.characters[name],
-                        basic,
-                    },
-                },
-        })),
+export const useCharacterStore = create<CharacterStore>((set, get) => ({
+  server: initialServerCharacters,
 
-        setCharacterItemEquip: (name: string, itemEquip: ItemEquipInfo) =>
-            set((state) => ({
-                characters: {
-                    ...state.characters,
-                    [name]: {
-                        ...state.characters[name],
-                        equips: itemEquip,
-                    },
-                },
-        })),
-
-        setCharacterSymbol: (name: string, symbol: SymbolInfo) =>
-            set((state) => ({
-                characters: {
-                    ...state.characters,
-                    [name]: {
-                        ...state.characters[name],
-                        symbol: symbol,
-                    },
-                },
-        })),
-
-        setCharacterEXP: (name: string, basic: BasicCharacterInfo) => {
-            const expData: ExpData = {
-                date: basic.date,
-                exp: basic.character_exp,
-                exp_rate: basic.character_exp_rate.toString()
-            };
-            
-            set((state) => {
-                const existing = state.characters[name];
-                const progression = existing?.expProgression ?? [];
-            
-                return {
-                    characters: {
-                        ...state.characters,
-                        [name]: {
-                            ...existing,
-                            expProgression: [...progression, expData],
-                        },
-                    },
-                };
-            });
-        },
-
-        
-        setCharacterStat: (name: string, stat: StatInfo) =>
-            set((state) => ({
-                characters: {
-                    ...state.characters,
-                    [name]: {
-                        ...state.characters[name],
-                        stat: stat,
-                    },
-                },
-        })),
-
-        setCharacters: (charaters: Characters) => {
-            set(() => ({ characters: charaters }));
-        },
-
-        getCharacters: () => get().characters,
-
-        setCharacter: (name: string, character: Character) => {
-            set((state) => ({
-                characters: {
-                    ...state.characters,
-                    [name]: character,
-                },
-            })) 
+  setCharacterOCID: (name, server, ocid) =>
+    set((state) => ({
+      server: {
+        ...state.server,
+        [server]: {
+          ...state.server[server],
+          [name]: {
+            ...(state.server[server]?.[name] || {}),
+            name,
+            ocid
+          }
         }
-    }));
+      }
+    })),
+
+  setCharacterBasic: (name, server, basic) =>
+    set((state) => ({
+      server: {
+        ...state.server,
+        [server]: {
+          ...state.server[server],
+          [name]: {
+            ...state.server[server][name],
+            basic
+          }
+        }
+      }
+    })),
+
+  setCharacterItemEquip: (name, server, itemEquip) =>
+    set((state) => ({
+      server: {
+        ...state.server,
+        [server]: {
+          ...state.server[server],
+          [name]: {
+            ...state.server[server][name],
+            equips: itemEquip
+          }
+        }
+      }
+    })),
+
+  setCharacterSymbol: (name, server, symbol) =>
+    set((state) => ({
+      server: {
+        ...state.server,
+        [server]: {
+          ...state.server[server],
+          [name]: {
+            ...state.server[server][name],
+            symbol
+          }
+        }
+      }
+    })),
+
+  setCharacterStat: (name, server, stat) =>
+    set((state) => ({
+      server: {
+        ...state.server,
+        [server]: {
+          ...state.server[server],
+          [name]: {
+            ...state.server[server][name],
+            stat
+          }
+        }
+      }
+    })),
+
+  setCharacterEXP: (name, server, expData) =>
+    set((state) => {
+      const existing = state.server[server]?.[name] || {};
+      const progression = existing.expProgression || [];
+      return {
+        server: {
+          ...state.server,
+          [server]: {
+            ...state.server[server],
+            [name]: {
+              ...existing,
+              expProgression: [...progression, expData]
+            }
+          }
+        }
+      };
+    }),
+
+  getCharacter: (name, server) => get().server[server]?.[name],
+
+  setCharacter: (name, server, character) =>
+    set((state) => ({
+      server: {
+        ...state.server,
+        [server]: {
+          ...state.server[server],
+          [name]: character
+        }
+      }
+    })),
+
+  setCharacters: (characters) => set(() => ({ server: characters })),
+
+  getServerCharacters: () => get().server,
+
+  reset: () => set(() => ({ server: initialServerCharacters }))
+}));

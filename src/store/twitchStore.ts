@@ -1,6 +1,7 @@
 // store/twitchStore.ts
 import { create } from 'zustand';
 import { TwitchBroadcasterConfiguration } from '../types/types';
+import { MapleServer } from '@ruvice/my-maple-models';
 
 interface TwitchStore {
         config: TwitchConfig;
@@ -19,7 +20,7 @@ export type TwitchConfig = {
         configVersion: string;
 }
 const initialConfig: TwitchConfig = {
-        configuration: {},
+        configuration: { [MapleServer.KMS]: {}, [MapleServer.SEA]: {} },
         channelID: '',
         configVersion: ''
 };

@@ -1,19 +1,26 @@
 import axios from "axios"
-import { Ocid, OpenAPIStatResponse, OpenAPICharacterBasicResponse, OpenAPIItemEquipmentResponse, OpenAPIOcidQueryResponse, OpenAPISymbolEquipmentResponse, Character } from "@ruvice/my-maple-models"
-import { getAPIDate, getAPIDateForXDaysAgo, saveCharacterData } from "./utils/utils"
+import { OpenAPIOcidQueryResponse, Character, MapleServer } from "@ruvice/my-maple-models"
+import { saveCharacterData } from "./utils/utils"
 import { CachedCharacterData, LoadCharacterRequest } from "./types/types";
 import { useTwitchStore } from "./store/twitchStore";
 import { useCharacterStore } from "./store/characterStore";
+import { useViewStore } from "./store/useCharacterViewStore";
 
-const domain = 'https://my-maple-proxy.vercel.app/api/nexonProxy';
+// const domain = 'https://my-maple-proxy.vercel.app/api/nexonProxy';
 // const batchFetchDomain = 'https://my-maple-proxy.vercel.app/api/batchFetch';
-const batchFetchDomain = ' http://localhost:3000/api/batchFetch';
+const domain = 'http://localhost:3000/api/nexonProxy';
+const batchFetchDomain = 'http://localhost:3000/api/batchFetch'
+const OCID_PATH = "v1/id";
 
-const OCID_PATH = "maplestorysea/v1/id";
+const setCharacter = useCharacterStore.getState().setCharacter;
+const getServerCharacters = useCharacterStore.getState().getServerCharacters;
+const setCurrentServer = useViewStore.getState().setCurrentServer;
+const getCurrentServer = useViewStore.getState().getCurrentServer;
 
 
-export const fetchCharacter = async(characterName: string) => batchFetchFromProxy<Character>({"character_name": characterName});
-export const fetchCharacterOCID = async (characterName: string) => getFromProxy<OpenAPIOcidQueryResponse>({'path': OCID_PATH, "character_name": characterName});
+export const fetchCharacter = async(characterName: string, server: MapleServer) => batchFetchFromProxy<Character>({"character_name": characterName, "server": server});
+export const fetchCharacterOCID = async (characterName: string, server: MapleServer) => getFromProxy<OpenAPIOcidQueryResponse>({'path': OCID_PATH, "character_name": characterName, "server": server});
+
 
 
 const getFromProxy = async <T>(params: Record<string, string>) => {
@@ -43,20 +50,29 @@ const batchFetchFromProxy = async <T>(params: Record<string, string>) => {
 
 export const loadCharacters = async(
     request: LoadCharacterRequest
-) => {{
+) => {
     const { queryClient } = request
-    const setCharacter = useCharacterStore.getState().setCharacter;
-    const getCharacters = useCharacterStore.getState().getCharacters;
-    
     const configuration = request.configuration ?? useTwitchStore.getState().getConfiguration();
-    for (const characterName of Object.keys(configuration)) {
-        const charRes = await queryClient.fetchQuery<Character>({
-            queryKey: ['character', characterName],
-            queryFn: () => fetchCharacter(characterName),
-        });
-        setCharacter(characterName, charRes);
+    for (const serverKey of Object.keys(configuration)) {
+        const server = serverKey as MapleServer;
+        for (const characterName of Object.keys(configuration[server])) {
+            const charRes = await queryClient.fetchQuery<Character>({
+                queryKey: ['character', characterName],
+                queryFn: () => fetchCharacter(characterName, server),
+            });
+            setCharacter(characterName, server, charRes);
+        }
     }
-    const fetchedCharacters = getCharacters()
+    const fetchedCharacters = getServerCharacters();
+    const currentServer = getCurrentServer();
+    if (Object.keys(currentServer).length === 0) {
+        if (Object.keys(fetchedCharacters.KMS).length !== 0) {
+            setCurrentServer(MapleServer.KMS);
+        } else if (Object.keys(fetchedCharacters.SEA).length !== 0) {
+            setCurrentServer(MapleServer.SEA);
+        }
+    }
+    
     const now = Date.now()
     const cache: CachedCharacterData = {
         characters: fetchedCharacters,
@@ -64,4 +80,4 @@ export const loadCharacters = async(
     }
     console.log('Caching latest character info')
     saveCharacterData(cache)
-}}
+}
