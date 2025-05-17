@@ -30,7 +30,6 @@ const STAT_OPTIONS = [
     {label: 'JUMP :', key: 'jump'},
     {label: 'All Stats :', key: 'all_stat'},
     {label: 'Wearer \'s Level is reduced : ', key: 'equipment_level_decrease'}
-
 ]
 
 function EquipmentStats(props: EquipmentStatsProps) {

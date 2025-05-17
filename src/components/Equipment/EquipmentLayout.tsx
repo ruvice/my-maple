@@ -20,7 +20,6 @@ function EquipmentLayout(props: EquipmentLayoutProps) {
     const equipmentMap = useMemo(() => {
         const map: Record<string, Equipment> = {};
         equipments?.forEach((equipment) => {
-            console.log(equipment.item_equipment_slot)
             const slotKey = equipment.item_equipment_slot.toLowerCase().replace(/\s+/g, '');
             map[slotKey] = equipment;
         });

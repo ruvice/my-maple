@@ -1,15 +1,20 @@
 import axios from "axios"
 import { Ocid, OpenAPIStatResponse, OpenAPICharacterBasicResponse, OpenAPIItemEquipmentResponse, OpenAPIOcidQueryResponse, OpenAPISymbolEquipmentResponse, Character } from "@ruvice/my-maple-models"
-import { getAPIDate, getAPIDateForXDaysAgo } from "./utils/utils"
+import { getAPIDate, getAPIDateForXDaysAgo, saveCharacterData } from "./utils/utils"
+import { CachedCharacterData, LoadCharacterRequest } from "./types/types";
+import { useTwitchStore } from "./store/twitchStore";
+import { useCharacterStore } from "./store/characterStore";
 
 const domain = 'https://my-maple-proxy.vercel.app/api/nexonProxy';
-const batchFetchDomain = 'https://my-maple-proxy.vercel.app/api/batchFetch';
+// const batchFetchDomain = 'https://my-maple-proxy.vercel.app/api/batchFetch';
+const batchFetchDomain = ' http://localhost:3000/api/batchFetch';
 
 const OCID_PATH = "maplestorysea/v1/id";
-const BASIC_PATH = "maplestorysea/v1/character/basic";
-const ITEM_PATH = "maplestorysea/v1/character/item-equipment";
-const SYMBOL_PATH = "maplestorysea/v1/character/symbol-equipment";
-const STAT_PATH = "maplestorysea/v1/character/stat";
+
+
+export const fetchCharacter = async(characterName: string) => batchFetchFromProxy<Character>({"character_name": characterName});
+export const fetchCharacterOCID = async (characterName: string) => getFromProxy<OpenAPIOcidQueryResponse>({'path': OCID_PATH, "character_name": characterName});
+
 
 const getFromProxy = async <T>(params: Record<string, string>) => {
     try {
@@ -35,12 +40,28 @@ const batchFetchFromProxy = async <T>(params: Record<string, string>) => {
     }
 };
 
-export const fetchCharacterOCID = async (characterName: string) => getFromProxy<OpenAPIOcidQueryResponse>({'path': OCID_PATH, "character_name": characterName});
-export const fetchCharacterBasic = async (ocid: Ocid) => getFromProxy<OpenAPICharacterBasicResponse>({'path': BASIC_PATH, "ocid": ocid, "date": getAPIDate()});
-export const fetchCharacterItemEquip = async (ocid: Ocid) => getFromProxy<OpenAPIItemEquipmentResponse>({'path': ITEM_PATH, "ocid": ocid, "date": getAPIDate()});
-export const fetchCharacterSymbol = async (ocid: Ocid) => getFromProxy<OpenAPISymbolEquipmentResponse>({'path': SYMBOL_PATH, "ocid": ocid, "date": getAPIDate()});
-export const fetchCharacterEXP = async (ocid: Ocid, offset: number) => 
-    getFromProxy<OpenAPICharacterBasicResponse>({'path': BASIC_PATH, "ocid": ocid, "date": getAPIDateForXDaysAgo(offset)});
-export const fetchCharacterStat = async (ocid: Ocid) => getFromProxy<OpenAPIStatResponse>({'path': STAT_PATH, "ocid": ocid, "date": getAPIDate()});
-export const fetchCharacter = async(characterName: string) => batchFetchFromProxy<Character>({"character_name": characterName});
 
+export const loadCharacters = async(
+    request: LoadCharacterRequest
+) => {{
+    const { queryClient } = request
+    const setCharacter = useCharacterStore.getState().setCharacter;
+    const getCharacters = useCharacterStore.getState().getCharacters;
+    
+    const configuration = request.configuration ?? useTwitchStore.getState().getConfiguration();
+    for (const characterName of Object.keys(configuration)) {
+        const charRes = await queryClient.fetchQuery<Character>({
+            queryKey: ['character', characterName],
+            queryFn: () => fetchCharacter(characterName),
+        });
+        setCharacter(characterName, charRes);
+    }
+    const fetchedCharacters = getCharacters()
+    const now = Date.now()
+    const cache: CachedCharacterData = {
+        characters: fetchedCharacters,
+        expiry: now + 20 * 60 * 1000
+    }
+    console.log('Caching latest character info')
+    saveCharacterData(cache)
+}}

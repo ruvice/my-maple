@@ -41,6 +41,12 @@ function CharacterExpView(props: CharacterExpViewProps) {
         }
     }, [sorted])
 
+    const todayExpGain = useMemo(() => {
+        if (sorted) {
+            return (sorted[sorted.length - 1].exp - sorted[sorted.length - 2].exp).toLocaleString();
+        }
+    }, [sorted])
+
     if  (expProgression === undefined) { return <div>Failed to retrieve exp data</div>}
     const renderLineChart = (
         <LineChart width={220} height={200} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
@@ -65,7 +71,10 @@ function CharacterExpView(props: CharacterExpViewProps) {
     return (
         <div className='character-exp-view'>
             {renderLineChart}
-            <p className='character-exp-view-text'>Total Exp Gained: {totalExpGain}</p>
+            <div className='character-exp-summary'>
+                <p className='character-exp-view-text'>Exp (Total): {totalExpGain}</p>
+                <p className='character-exp-view-text'>Exp (Today): {todayExpGain}</p>
+            </div>
         </div>
     )
 }

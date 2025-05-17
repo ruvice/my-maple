@@ -1,12 +1,15 @@
-.modal-backdrop {
+.modal {
     position: fixed;
     inset: 0; /* shorthand for top: 0; right: 0; bottom: 0; left: 0 */
-    background-color: rgba(0, 0, 0, 0.5); /* dimmed overlay */
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 9999;
-  }
+}
+
+.backdrop {
+    background-color: rgba(0, 0, 0, 0.5); /* dimmed overlay */
+}
   
 .modal-content {
     background: white;

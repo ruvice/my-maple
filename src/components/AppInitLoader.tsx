@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCharacterStore } from '../store/characterStore';
-import { fetchCharacter } from '../api';
-import { TwitchBroadcasterConfiguration } from '../types/types';
+import { fetchCharacter, loadCharacters } from '../api';
+import { CachedCharacterData, LoadCharacterRequest, TwitchBroadcasterConfiguration } from '../types/types';
 import { Character } from '@ruvice/my-maple-models'
 import { loadCharacterData, saveCharacterData } from '../utils/utils';
+import { useTwitchStore } from '../store/twitchStore';
 
 export default function AppInitLoader() {
     const queryClient = useQueryClient()
@@ -12,9 +13,12 @@ export default function AppInitLoader() {
     const setCharacters = useCharacterStore((s) => s.setCharacters);
     const getCharacters = useCharacterStore((s) => s.getCharacters);
     const setCharacter = useCharacterStore((s) => s.setCharacter);
-    const [configuration, setConfiguration] = useState<TwitchBroadcasterConfiguration>({})
-    const [channelID, setChannelID] = useState<string>("")
-    const [configVersison, setConfigVersion] = useState<string>("")
+    const setConfiguration = useTwitchStore((s) => s.setConfiguration);
+    const setChannelID = useTwitchStore((s) => s.setChannelID);
+    const setConfigVersion = useTwitchStore((s) => s.setConfigVersion);
+    const [localTwitchConfiguration, setLocalTwitchConfiguration] = useState<TwitchBroadcasterConfiguration>({})
+
+    const testCharacters = ['lqsKniGhT']
     useEffect(() => {
         const interval = setInterval(() => {
           if (window.Twitch && window.Twitch.ext && window.Twitch.ext.configuration?.broadcaster) {
@@ -27,6 +31,7 @@ export default function AppInitLoader() {
             try {
               const jsonContent = JSON.parse(content);
               setConfiguration(jsonContent);
+              setLocalTwitchConfiguration(jsonContent);
               setConfigVersion(configVersion);
             } catch (err) {
               console.warn('Failed to parse broadcaster config', err);
@@ -41,6 +46,7 @@ export default function AppInitLoader() {
               try {
                 const jsonContent = JSON.parse(content);
                 setConfiguration(jsonContent);
+                setLocalTwitchConfiguration(jsonContent);
                 setConfigVersion(configVersion);
               } catch (err) {
                 console.warn('Failed to parse broadcaster config onChanged', err);
@@ -55,30 +61,22 @@ export default function AppInitLoader() {
       }, []);
       
     useEffect(() => {
-        if (Object.keys(configuration).length === 0) {
+        if (Object.keys(localTwitchConfiguration).length === 0) {
             return
         };
-        const loadCharacters = async() => {{
-            for (const characterName of Object.keys(configuration)) {
-                const charRes = await queryClient.fetchQuery<Character>({
-                    queryKey: ['character', characterName],
-                    queryFn: () => fetchCharacter(characterName),
-                });
-                setCharacter(characterName, charRes);
-            }
-            const fetchedCharacters = getCharacters()
-            console.log('Caching latest character info')
-            saveCharacterData(channelID, configVersison, fetchedCharacters)
-        }}
-        const cachedCharacters = loadCharacterData(channelID, configVersison)
+        const cachedCharacters = loadCharacterData()
         if (cachedCharacters == null || Object.keys(cachedCharacters).length === 0) {
             console.log('Fetching latest character info')
-            loadCharacters();
+            const loadCharacterRequest: LoadCharacterRequest = {
+                configuration: localTwitchConfiguration,
+                queryClient: queryClient
+            }
+            loadCharacters(loadCharacterRequest);
         } else {
             console.log('Using cached character info')
             setCharacters(cachedCharacters);
         }
-    }, [configuration]);
+    }, [localTwitchConfiguration]);
 
   return (<div></div>);
 }

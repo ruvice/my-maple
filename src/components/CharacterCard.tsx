@@ -1,9 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useCharacterStore } from '../store/characterStore'
 import { Character } from '@ruvice/my-maple-models'
-import EquipmentCard from './Equipment/EquipmentCard'
 import "./CharacterCard.css"
-import EquipmentLayout from './Equipment/EquipmentLayout'
 import CharacterEquipmentView from './CharacterEquipmentView'
 import { ViewMode } from '../constants/viewModes';
 import { useViewStore } from '../store/useCharacterViewStore'
@@ -15,7 +12,12 @@ import mapleScouterLogo from '../assets/maplescouter_logo.png'
 import mapleStalkerSeaLogo from '../assets/maplestalkersea_logo.png'
 import MapleGGLogo from '../assets/MapleGGLogo'
 import { imageMap, backgroundMap } from '../utils/imageMap'
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, RotateCw } from 'lucide-react';
+import { loadCharacters } from '../api'
+import { LoadCharacterRequest } from '../types/types';
+import { useQueryClient } from '@tanstack/react-query';
+import { useModal } from '../utils/useModal';
+import Tooltip from './common/Tooltip/Tooltip';
 
 type CharacterCardProps = {
     character: Character;
@@ -26,7 +28,10 @@ type CharacterCardProps = {
 function CharacterCard(props: CharacterCardProps) {
     const { character, onNext, onPrev } = props
     const { currentView, setView } = useViewStore();
+    const { showModal, hideModal, ModalRenderer } = useModal();
+    const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
     const currentViewRef = useRef<ViewMode>(currentView);
+    const queryClient = useQueryClient()
     const handleHeaderSelection = (mode: ViewMode) => {
         setView(mode)
         currentViewRef.current = mode;
@@ -42,6 +47,28 @@ function CharacterCard(props: CharacterCardProps) {
     const mapleScouterURL = 'https://www.mapleseascouter.com/character/' + character.ocid
     const mapleStalkerSeaURL = 'https://www.maplestalkersea.com/equipment?character=' + character.name
     const mapleGGURL = 'https://msea.maple.gg/u/' + character.name
+
+    const refreshData = () => {
+        const loadCharacterRequest: LoadCharacterRequest = {
+            queryClient: queryClient
+        }
+        loadCharacters(loadCharacterRequest)
+    }
+
+    const handlePointerEnter = (e: React.PointerEvent<Element>) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        hoverTimeout.current = setTimeout(() => {
+            showModal(<Tooltip message="Data updated every 20 minutes" position={rect} />, true)
+        }, 200); // 200ms delay
+    }
+
+    const handlePointerLeave = () => {
+        if (hoverTimeout.current) {
+            clearTimeout(hoverTimeout.current);
+            hoverTimeout.current = null;
+        }
+        hideModal()
+    }
     return (
         <div 
             className="character-card"
@@ -68,7 +95,16 @@ function CharacterCard(props: CharacterCardProps) {
                         <img className="character-card-image" src={character.basic?.character_image}></img>
                     </div>
                     <div className="character-basic-info">
-                        <p className="`character-card`-line-text character-name bold-text">{character.basic?.character_name}</p>
+                        <div className='character-basic-name'>
+                            <p className="`character-card`-line-text character-name bold-text">{character.basic?.character_name}</p>
+                            <RotateCw className="character-card-refresh" 
+                                color={'white'} 
+                                size={12} 
+                                onClick={refreshData} 
+                                onPointerEnter={handlePointerEnter}
+                                onPointerLeave={handlePointerLeave}
+                                />
+                        </div>
                         <p className="character-card-line-text">{character.basic?.character_class}</p>
                         <p className="character-card-line-text">Level {character.basic?.character_level}</p>
                         <p className="character-card-line-text">{character.basic?.world_name}</p>
@@ -94,6 +130,7 @@ function CharacterCard(props: CharacterCardProps) {
                 {currentView === ViewMode.EXP && <CharacterExpView expProgression={character.expProgression}/>}
             </div>
             </div>
+            <ModalRenderer />
         </div>
     )
 }

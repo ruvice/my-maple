@@ -22,3 +22,13 @@
 .character-exp-view-text {
     font-size: 12px;
 }
+
+.character-exp-summary {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+}
+
+.character-exp-view-text {
+    margin: 0px;
+}

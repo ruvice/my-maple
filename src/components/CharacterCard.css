@@ -101,3 +101,13 @@
 .character-card-logo {
     cursor: pointer;
 }
+
+.character-basic-name {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.character-card-refresh {
+    cursor: pointer;
+}

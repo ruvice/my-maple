@@ -1,4 +1,6 @@
 import { Characters } from "../store/characterStore";
+import { useTwitchStore } from "../store/twitchStore";
+import { CachedCharacterData } from "../types/types";
 
 // Used for Maplesea Open APIs
 export function getAPIDate(): string {
@@ -65,21 +67,22 @@ export function getDDMMString(dateString: string): string {
 export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export function saveCharacterData(
-    opaqueId: string,
-    configVersion: string,
-    data: Characters
+    data: CachedCharacterData
 ) {
+    const opaqueId = useTwitchStore.getState().getChannelID();
+    const configVersion = useTwitchStore.getState().getConfigVersion();
     const apiDate = getAPIDate();
+    
     const newKey = `MyMaple-${opaqueId}-${configVersion}-${apiDate}`;
   
     // Step 1: Check for existing keys in localStorage with same opaqueId
     const keysToDelete: string[] = [];
   
     for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key && key.startsWith(`MyMaple-${opaqueId}-`) && key !== newKey) {
-        keysToDelete.push(key);
-      }
+        const key = localStorage.key(i);
+        if (key && key.startsWith(`MyMaple-${opaqueId}-`) && key !== newKey) {
+            keysToDelete.push(key);
+        }
     }
   
     // Step 2: Delete any outdated keys
@@ -90,13 +93,20 @@ export function saveCharacterData(
     localStorage.setItem(newKey, JSON.stringify(data));
 }
 
-export function loadCharacterData(
-    opaqueId: string,
-    configVersion: string
-): Characters | null {
+export function loadCharacterData(): Characters | null {
+    const opaqueId = useTwitchStore.getState().getChannelID();
+    const configVersion = useTwitchStore.getState().getConfigVersion();
     const apiDate = getAPIDate();
     const newKey = `MyMaple-${opaqueId}-${configVersion}-${apiDate}`;
     const raw = localStorage.getItem(newKey);
-    return raw ? JSON.parse(raw) : null;
+    if (raw === null) {
+        return null
+    }
+    const cachedCharacterData: CachedCharacterData = JSON.parse(raw)
+    const now = Date.now()
+    if (now > cachedCharacterData.expiry) {
+        return null
+    }
+    return cachedCharacterData.characters
 }
 

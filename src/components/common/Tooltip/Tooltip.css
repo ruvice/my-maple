@@ -1,4 +1,4 @@
-.equipment-card {
+.tooltip {
     background-color: rgba(22, 22, 22, 0.9);
     display: flex;
     flex-direction: column;
@@ -12,6 +12,6 @@
     cursor: pointer;
 }
 
-p {
-    font-size: 10px;
+.tooltip-text {
+    margin: 0px;
 }
