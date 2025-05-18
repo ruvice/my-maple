@@ -1,6 +1,8 @@
-import { Characters, ServerCharacters } from "../store/characterStore";
+import { MapleServer } from "@ruvice/my-maple-models";
+import { Characters, ServerCharacters, useCharacterStore } from "../store/characterStore";
 import { useTwitchStore } from "../store/twitchStore";
 import { CachedCharacterData } from "../types/types";
+import { useViewStore } from "../store/useCharacterViewStore";
 
 // Used for Maplesea Open APIs
 export function getAPIDate(): string {
@@ -110,3 +112,13 @@ export function loadCharacterData(): ServerCharacters | null {
     return cachedCharacterData.characters
 }
 
+export function updateValidServers() {
+    const validServers: MapleServer[] = []
+    const serverCharacters = useCharacterStore.getState().getServerCharacters();
+    Object.entries(serverCharacters).forEach(([key, value]) => {
+        if (Object.keys(value).length > 0) {
+            validServers.push(key as MapleServer)
+        }
+    })
+    useViewStore.getState().setValidServers(validServers);
+}

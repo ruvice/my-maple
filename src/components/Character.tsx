@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useCharacterStore } from '../store/characterStore'
 import CharacterCard from './CharacterCard'
-import LoadingView from './common/Loading/LoadingView';
 import { useViewStore } from '../store/useCharacterViewStore';
 
 function Character() {
@@ -12,12 +11,13 @@ function Character() {
     const prev = () => setSelectedIndex((prev) => (prev - 1 + (characterCardArr ? characterCardArr.length : 0)) % (characterCardArr ? characterCardArr.length : 0));
     const characterCardArr = useMemo(() => {
         if (Object.keys(server[currentServer]).length !== 0) {
+            setSelectedIndex(0);
             return Object.values(server[currentServer]).map((character) => (
                 <CharacterCard key={character.name} character={character} onNext={next} onPrev={prev} />
             ))
         }
     }, [server, currentServer])
-    if (Object.keys(server[currentServer]).length === 0) { return <LoadingView /> }
+    if (Object.keys(server[currentServer]).length === 0) { return <CharacterCard onNext={next} onPrev={prev} /> }
     return (
         <>
             {characterCardArr && characterCardArr[selectedIndex]}

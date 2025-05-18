@@ -1,15 +1,16 @@
 import axios from "axios"
 import { OpenAPIOcidQueryResponse, Character, MapleServer } from "@ruvice/my-maple-models"
-import { saveCharacterData } from "./utils/utils"
+import { saveCharacterData, updateValidServers } from "./utils/utils"
 import { CachedCharacterData, LoadCharacterRequest } from "./types/types";
 import { useTwitchStore } from "./store/twitchStore";
 import { useCharacterStore } from "./store/characterStore";
 import { useViewStore } from "./store/useCharacterViewStore";
 
-// const domain = 'https://my-maple-proxy.vercel.app/api/nexonProxy';
-// const batchFetchDomain = 'https://my-maple-proxy.vercel.app/api/batchFetch';
-const domain = 'http://localhost:3000/api/nexonProxy';
-const batchFetchDomain = 'http://localhost:3000/api/batchFetch'
+const domain = 'https://my-maple-proxy-2.vercel.app/api/nexonProxy';
+const batchFetchDomain = 'https://my-maple-proxy-2.vercel.app/api/batchFetch';
+
+// const domain = 'http://localhost:3000/api/nexonProxy';
+// const batchFetchDomain = 'http://localhost:3000/api/batchFetch'
 const OCID_PATH = "v1/id";
 
 const setCharacter = useCharacterStore.getState().setCharacter;
@@ -20,8 +21,6 @@ const getCurrentServer = useViewStore.getState().getCurrentServer;
 
 export const fetchCharacter = async(characterName: string, server: MapleServer) => batchFetchFromProxy<Character>({"character_name": characterName, "server": server});
 export const fetchCharacterOCID = async (characterName: string, server: MapleServer) => getFromProxy<OpenAPIOcidQueryResponse>({'path': OCID_PATH, "character_name": characterName, "server": server});
-
-
 
 const getFromProxy = async <T>(params: Record<string, string>) => {
     try {
@@ -63,6 +62,8 @@ export const loadCharacters = async(
             setCharacter(characterName, server, charRes);
         }
     }
+
+    // Setting servers
     const fetchedCharacters = getServerCharacters();
     const currentServer = getCurrentServer();
     if (Object.keys(currentServer).length === 0) {
@@ -72,6 +73,8 @@ export const loadCharacters = async(
             setCurrentServer(MapleServer.SEA);
         }
     }
+    updateValidServers()
+    
     
     const now = Date.now()
     const cache: CachedCharacterData = {
