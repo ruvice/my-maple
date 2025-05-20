@@ -1,0 +1,30 @@
+
+.character-card-controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.character-card-image-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.character-basic-name {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+}
+
+.character-card-refresh {
+    cursor: pointer;
+}
+
+.character-card-dropdown-container {
+    position: absolute;
+    right: 4px;
+}

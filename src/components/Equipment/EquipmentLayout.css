@@ -7,8 +7,8 @@
     "Ring4       Weapon    Top             ShoulderDecoration   SecondaryWeapons"
     "PocketItem  Belt      Bottom          Glove                Cape"
     ".           .         Shoes           .                    MechanicalHeart";
-    grid-template-columns: repeat(5, 36px);
-    grid-template-rows: repeat(6, 36px);
+    grid-template-columns: repeat(5, 42px);
+    grid-template-rows: repeat(6, 42px);
     gap: 2px 2px;
     justify-content: center;
 }
@@ -125,8 +125,8 @@
 }
 
 .equipment-cell-image {
-    height: 28px;
-    width: 28px;
+    height: 32px;
+    width: 32px;
     object-fit: contain; /* or 'cover' depending on the effect you want */
     display: block;
 }

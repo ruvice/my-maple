@@ -1,5 +1,5 @@
 import React from 'react'
-import Loading from '../../../assets/class/loading.gif'
+import Loading from '../../../assets/LoadingMushroom.gif'
 import './LoadingView.css'
 
 function LoadingView() {

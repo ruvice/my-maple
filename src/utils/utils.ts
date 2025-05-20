@@ -1,7 +1,5 @@
 import { MapleServer } from "@ruvice/my-maple-models";
-import { Characters, ServerCharacters, useCharacterStore } from "../store/characterStore";
-import { useTwitchStore } from "../store/twitchStore";
-import { CachedCharacterData } from "../types/types";
+import { useCharacterStore } from "../store/characterStore";
 import { useViewStore } from "../store/useCharacterViewStore";
 
 // Used for Maplesea Open APIs
@@ -68,50 +66,6 @@ export function getDDMMString(dateString: string): string {
 
 export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export function saveCharacterData(
-    data: CachedCharacterData
-) {
-    const opaqueId = useTwitchStore.getState().getChannelID();
-    const configVersion = useTwitchStore.getState().getConfigVersion();
-    const apiDate = getAPIDate();
-    
-    const newKey = `MyMaple-${opaqueId}-${configVersion}-${apiDate}`;
-  
-    // Step 1: Check for existing keys in localStorage with same opaqueId
-    const keysToDelete: string[] = [];
-  
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key && key.startsWith(`MyMaple-${opaqueId}-`) && key !== newKey) {
-            keysToDelete.push(key);
-        }
-    }
-  
-    // Step 2: Delete any outdated keys
-    console.log('Deleting stale cached character info')
-    keysToDelete.forEach((key) => localStorage.removeItem(key));
-  
-    // Step 3: Save new data
-    localStorage.setItem(newKey, JSON.stringify(data));
-}
-
-export function loadCharacterData(): ServerCharacters | null {
-    const opaqueId = useTwitchStore.getState().getChannelID();
-    const configVersion = useTwitchStore.getState().getConfigVersion();
-    const apiDate = getAPIDate();
-    const newKey = `MyMaple-${opaqueId}-${configVersion}-${apiDate}`;
-    const raw = localStorage.getItem(newKey);
-    if (raw === null) {
-        return null
-    }
-    const cachedCharacterData: CachedCharacterData = JSON.parse(raw)
-    const now = Date.now()
-    if (now > cachedCharacterData.expiry) {
-        return null
-    }
-    return cachedCharacterData.characters
-}
-
 export function updateValidServers() {
     const validServers: MapleServer[] = []
     const serverCharacters = useCharacterStore.getState().getServerCharacters();
@@ -121,4 +75,5 @@ export function updateValidServers() {
         }
     })
     useViewStore.getState().setValidServers(validServers);
+    useViewStore.getState().setCurrentServer(validServers[0]);
 }

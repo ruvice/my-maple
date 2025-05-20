@@ -1,4 +1,4 @@
-import { Character, getLocalisedCharacterClass } from '@ruvice/my-maple-models'
+import { Character, getLocalisedCharacterClass, MapleServer } from '@ruvice/my-maple-models'
 import React, { useMemo, useRef } from 'react'
 import { ArrowLeft, ArrowRight, RotateCw } from 'lucide-react';
 import { LoadCharacterRequest } from '../../types/types';
@@ -8,16 +8,19 @@ import Tooltip from '../common/Tooltip/Tooltip';
 import { useModal } from '../../utils/useModal';
 import CharacterCardExternalLinks from '../CharacterCardExternalLinks';
 import { useViewStore } from '../../store/useCharacterViewStore';
+import "./CardBasicInfo.css"
+import Dropdown from '../common/Dropdown/Dropdown';
 
 type CardBasicInfoProps = {
-    character?: Character
-    onNext?: () => void;
-    onPrev?: () => void;
+    character?: Character;
+    hasMultiple: boolean;
+    onNext: () => void;
+    onPrev: () => void;
 }
 
 function CardBasicInfo(props: CardBasicInfoProps) {
-    const { character, onNext, onPrev } = props;
-    const { currentServer } = useViewStore()
+    const { character, onNext, onPrev, hasMultiple } = props;
+    const { currentServer, validServers, setCurrentServer } = useViewStore()
     const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
     const { showModal, hideModal, ModalRenderer } = useModal();
     const queryClient = useQueryClient()
@@ -31,7 +34,7 @@ function CardBasicInfo(props: CardBasicInfoProps) {
     const handlePointerEnter = (e: React.PointerEvent<Element>) => {
         const rect = e.currentTarget.getBoundingClientRect();
         hoverTimeout.current = setTimeout(() => {
-            showModal(<Tooltip message="Data updated every 20 minutes" position={rect} />, true)
+            showModal(<Tooltip message="Data updated every 15 minutes" position={rect} />, true)
         }, 200); // 200ms delay
     }
 
@@ -42,13 +45,24 @@ function CardBasicInfo(props: CardBasicInfoProps) {
         }
         hideModal()
     }
+    const handleServerSelection = (server: MapleServer) => {
+        setCurrentServer(server)
+    }
+    const serverOptions = useMemo(() => {
+        return validServers.filter((server) => server !== currentServer)
+    }, [currentServer, validServers])
     const jobName = character?.basic ? getLocalisedCharacterClass(character.basic.character_class, currentServer) : ''
 
     const characterBasicInfo = useMemo(() => {
         if (character) {
             return (
             <>
-                <div className="character-card-controls"><ArrowLeft color={'white'} size={12} onClick={onPrev}/></div>
+                { validServers.length > 1 &&
+                    <div className="character-card-dropdown-container">
+                        <Dropdown options={serverOptions} handleSelection={handleServerSelection} currentSelection={currentServer} />
+                    </div>
+                }
+                {hasMultiple ? <div className="character-card-controls"><ArrowLeft color={'white'} size={12} onClick={onPrev}/></div> : <div></div>}
                 <div className='character-card-basic-info-container'>
                     <div className="character-card-image-div">
                         <img className="character-card-image" src={character.basic?.character_image}></img>
@@ -69,12 +83,12 @@ function CardBasicInfo(props: CardBasicInfoProps) {
                         <p className="character-card-line-text">{character.basic?.world_name}</p>
                     </div>
                 </div>
-                <div className="character-card-controls"><ArrowRight color={'white'} size={12} onClick={onNext}/></div>
+                {hasMultiple ? <div className="character-card-controls"><ArrowRight color={'white'} size={12} onClick={onNext}/></div> : <div></div>}
                 <CharacterCardExternalLinks character={character} />
             </>
             )
         }
-    }, [character])
+    }, [character, validServers, hasMultiple])
   return (
     <>
         {characterBasicInfo}

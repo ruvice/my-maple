@@ -32,15 +32,13 @@ function ConfigView() {
             const content = window.Twitch.ext.configuration.broadcaster.content
             const jsonContent: TwitchBroadcasterConfiguration = JSON.parse(content)
             setConfiguration(jsonContent)
-            setServer(MapleServer.SEA)
-            currentServerRef.current = MapleServer.SEA;
-            // if (Object.keys(jsonContent[MapleServer.KMS]).length > 0) {
-            //     setServer(MapleServer.KMS)
-            //     currentServerRef.current = MapleServer.KMS;
-            // } else if (Object.keys(jsonContent[MapleServer.SEA]).length > 0) {
-            //     setServer(MapleServer.SEA)
-            //     currentServerRef.current = MapleServer.SEA;
-            // }
+            if (Object.keys(jsonContent[MapleServer.KMS]).length > 0) {
+                setServer(MapleServer.KMS)
+                currentServerRef.current = MapleServer.KMS;
+            } else if (Object.keys(jsonContent[MapleServer.SEA]).length > 0) {
+                setServer(MapleServer.SEA)
+                currentServerRef.current = MapleServer.SEA;
+            }
         }
     })
     const handleDelete = useCallback((characterName: string) => {

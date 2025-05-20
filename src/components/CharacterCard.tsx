@@ -13,19 +13,15 @@ import CardBasicInfo from './CardBasicInfo/CardBasicInfo';
 
 type CharacterCardProps = {
     character?: Character;
-    onNext?: () => void;
-    onPrev?: () => void;
+    hasMultiple: boolean;
+    onNext: () => void;
+    onPrev: () => void;
 }
 
 function CharacterCard(props: CharacterCardProps) {
-    const { character, onNext, onPrev } = props
-    const { currentView, setView, currentServer, setCurrentServer, validServers } = useViewStore();
-    const currentServerRef = useRef(currentServer);
+    const { character, onNext, onPrev, hasMultiple } = props
+    const { currentView, setView } = useViewStore();
     const currentViewRef = useRef<ViewMode>(currentView);
-    const handleServerHeaderSelection = (server: MapleServer) => {
-        setCurrentServer(server);
-        currentServerRef.current = server
-    }
 
     const handleCharacterInfoHeaderSelection = (mode: ViewMode) => {
         setView(mode)
@@ -56,12 +52,8 @@ function CharacterCard(props: CharacterCardProps) {
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat'
                 }} >
-            <Header 
-                options={validServers} 
-                onSelected={handleServerHeaderSelection} 
-                currentRef={currentServerRef} />
             <div className="character-info-grid">
-                <CardBasicInfo character={character} onNext={onNext} onPrev={onPrev} />
+                <CardBasicInfo character={character} onNext={onNext} onPrev={onPrev} hasMultiple={hasMultiple} />
             </div>
             <Header options={ViewMode} onSelected={handleCharacterInfoHeaderSelection} currentRef={currentViewRef} />
             <div className="character-detailed-info">

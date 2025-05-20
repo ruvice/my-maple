@@ -14,44 +14,44 @@ module.exports = {
           ],
         },
     },
-    // webpack: {
-    //     configure: (webpackConfig) => {
-    //     // Override the entry
-    //     webpackConfig.entry = {
-    //         main: path.resolve(__dirname, 'src/index.tsx'),
-    //         config: path.resolve(__dirname, 'src/config.tsx'),
-    //     };
+    webpack: {
+        configure: (webpackConfig) => {
+        // Override the entry
+        webpackConfig.entry = {
+            main: path.resolve(__dirname, 'src/index.tsx'),
+            config: path.resolve(__dirname, 'src/config.tsx'),
+        };
 
-    //     // Remove the default HtmlWebpackPlugin instance
-    //     webpackConfig.plugins = webpackConfig.plugins.filter(
-    //         (plugin) => !(plugin instanceof HtmlWebpackPlugin)
-    //     );
+        // Remove the default HtmlWebpackPlugin instance
+        webpackConfig.plugins = webpackConfig.plugins.filter(
+            (plugin) => !(plugin instanceof HtmlWebpackPlugin)
+        );
 
-    //     // Add separate HTML files for each entry
-    //     webpackConfig.plugins.push(
-    //         new HtmlWebpackPlugin({
-    //         inject: true,
-    //         chunks: ['main'],
-    //         filename: 'index.html',
-    //         template: './public/index.html',
-    //         }),
-    //         new HtmlWebpackPlugin({
-    //         inject: true,
-    //         chunks: ['config'],
-    //         filename: 'config.html',
-    //         template: './public/config.html',
-    //         })
-    //     );
+        // Add separate HTML files for each entry
+        webpackConfig.plugins.push(
+            new HtmlWebpackPlugin({
+            inject: true,
+            chunks: ['main'],
+            filename: 'index.html',
+            template: './public/index.html',
+            }),
+            new HtmlWebpackPlugin({
+            inject: true,
+            chunks: ['config'],
+            filename: 'config.html',
+            template: './public/config.html',
+            })
+        );
 
-    //     webpackConfig.module.rules.push({
-    //         test: /\.(ttf|woff|woff2|eot|otf)$/,
-    //         type: 'asset/resource', // ensures it outputs real files
-    //         generator: {
-    //           filename: 'static/fonts/[name][ext]',
-    //         },
-    //     });
+        webpackConfig.module.rules.push({
+            test: /\.(ttf|woff|woff2|eot|otf)$/,
+            type: 'asset/resource', // ensures it outputs real files
+            generator: {
+              filename: 'static/fonts/[name][ext]',
+            },
+        });
 
-    //     return webpackConfig;
-    //     },
-    // },
+        return webpackConfig;
+        },
+    },
 };
