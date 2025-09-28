@@ -14,6 +14,13 @@ import RegisteredCharacter from './RegisteredCharacter'
 import { useTwitchStore } from '../../store/twitchStore'
 import Header from '../common/Header/Header'
 
+// Make sure to update this otherwise its disastrous
+const CONFIG_VERSION = "0.0.3"
+const DEFAULT_CONFIG = {
+    [MapleServer.KMS]: {},
+    [MapleServer.SEA]: {}
+};
+
 function ConfigView() {
     const queryClient = useQueryClient()
     const getTwitchConfiguration = useTwitchStore((s) => s.getConfiguration);
@@ -22,14 +29,17 @@ function ConfigView() {
     const [configuration, setConfiguration] = useState<TwitchBroadcasterConfiguration>(getTwitchConfiguration())
     const [characterName, setCharacterName] = useState('')
     const { showModal, hideModal, ModalRenderer } = useModal();
-    const handleHeaderSelection = (server: MapleServer) => {
-        setServer(server)
-        currentServerRef.current = server;
-    }
 
     window.Twitch.ext.configuration.onChanged(() => {
         if (window.Twitch.ext.configuration.broadcaster) {
-            const content = window.Twitch.ext.configuration.broadcaster.content
+            let content;
+            if (window.Twitch.ext.configuration.broadcaster.version !== CONFIG_VERSION) {
+                // Wipe older config if needed
+                content = JSON.stringify(DEFAULT_CONFIG);
+                window.Twitch.ext.configuration.set("broadcaster", CONFIG_VERSION, content);
+            } else {
+                content = window.Twitch.ext.configuration.broadcaster.content
+            }
             const jsonContent: TwitchBroadcasterConfiguration = JSON.parse(content)
             setConfiguration(jsonContent)
             if (Object.keys(jsonContent[MapleServer.KMS]).length > 0) {
@@ -41,11 +51,16 @@ function ConfigView() {
             }
         }
     })
+    
+    const handleHeaderSelection = (server: MapleServer) => {
+        setServer(server)
+        currentServerRef.current = server;
+    }
     const handleDelete = useCallback((characterName: string) => {
         const editedConfig = { ...configuration };
         delete editedConfig[server][characterName];
         const newConfig = JSON.stringify(editedConfig);
-        window.Twitch.ext.configuration.set("broadcaster", "1.0", newConfig);
+        window.Twitch.ext.configuration.set("broadcaster", CONFIG_VERSION, newConfig);
         setConfiguration(editedConfig)
     }, [configuration]);
     
@@ -68,9 +83,9 @@ function ConfigView() {
                         ...configuration[currentServerRef.current],
                         [characterName]: ocidRes.ocid 
                     }
-                })
-            const timestamp = Date.now().toString();
-            window.Twitch.ext.configuration.set("broadcaster", timestamp, newConfig)
+                }
+            )
+            window.Twitch.ext.configuration.set("broadcaster", CONFIG_VERSION, newConfig)
             setConfiguration((prev) => (
                 { 
                     ...prev,

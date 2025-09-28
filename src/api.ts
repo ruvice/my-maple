@@ -6,11 +6,11 @@ import { useTwitchStore } from "./store/twitchStore";
 import { useCharacterStore } from "./store/characterStore";
 import { useViewStore } from "./store/useCharacterViewStore";
 
-// const domain = 'https://my-maple-proxy-2.vercel.app/api/nexonProxy';
-// const batchFetchDomain = 'https://my-maple-proxy-2.vercel.app/api/batchFetch';
+const domain = 'https://my-maple-proxy-2.vercel.app/api/nexonProxy';
+const batchFetchDomain = 'https://my-maple-proxy-2.vercel.app/api/batchFetch';
 
-const domain = 'http://localhost:3000/api/nexonProxy';
-const batchFetchDomain = 'http://localhost:3000/api/batchFetch'
+// const domain = 'http://localhost:3000/api/nexonProxy';
+// const batchFetchDomain = 'http://localhost:3000/api/batchFetch'
 const OCID_PATH = "v1/id";
 
 const setCharacter = useCharacterStore.getState().setCharacter;
