@@ -48,6 +48,8 @@ import Hayato from '../assets/class/Hayato.png';
 import Kanna from '../assets/class/Kanna.png';
 import Bowman from '../assets/class/bowman.png'
 import Len from '../assets/class/Len.png';
+import MoXuan from '../assets/class/MoXuan.png';
+import Lynn from '../assets/class/Lynn.png';
 import Thief from '../assets/class/thief.png'
 import Pirate from '../assets/class/pirate.png'
 import Magician from '../assets/class/magician.png'
@@ -103,7 +105,9 @@ export const imageMap: Record<CharacterClass, string> = {
     [CharacterClass.Ark]: Ark,
     [CharacterClass.Hayato]: Hayato,
     [CharacterClass.Kanna]: Kanna,
-    [CharacterClass.Len]: Len
+    [CharacterClass.Len]: Len,
+    [CharacterClass.MoXuan]: MoXuan,
+    [CharacterClass.Lynn]: Lynn
 };
 
 export const backgroundMap: Record<CharacterClass, string> = {
@@ -155,5 +159,7 @@ export const backgroundMap: Record<CharacterClass, string> = {
     [CharacterClass.Ark]: Pirate,
     [CharacterClass.Hayato]: Warrior,
     [CharacterClass.Kanna]: Magician,
-    [CharacterClass.Len]: Warrior
-  };
+    [CharacterClass.Len]: Warrior,
+    [CharacterClass.MoXuan]: Pirate,
+    [CharacterClass.Lynn]: Magician
+};

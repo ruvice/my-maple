@@ -34,7 +34,8 @@ interface CharacterStore {
 
 const initialServerCharacters: ServerCharacters = {
   [MapleServer.KMS]: {},
-  [MapleServer.SEA]: {}
+  [MapleServer.SEA]: {},
+  [MapleServer.TMS]: {}
 };
 
 export const useCharacterStore = create<CharacterStore>((set, get) => ({

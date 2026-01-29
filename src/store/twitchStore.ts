@@ -20,7 +20,7 @@ export type TwitchConfig = {
         configVersion: string;
 }
 const initialConfig: TwitchConfig = {
-        configuration: { [MapleServer.KMS]: {}, [MapleServer.SEA]: {} },
+        configuration: { [MapleServer.KMS]: {}, [MapleServer.SEA]: {}, [MapleServer.TMS]: {} },
         channelID: '',
         configVersion: ''
 };

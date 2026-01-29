@@ -5,6 +5,7 @@ import { useQueryClient } from "@tanstack/react-query";
 export type TwitchBroadcasterConfiguration = {
     [MapleServer.KMS]: TwitchCharacters;
     [MapleServer.SEA]: TwitchCharacters;
+    [MapleServer.TMS]: TwitchCharacters;
 }
 
 export type TwitchCharacters = Record<string, Ocid>;
